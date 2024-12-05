@@ -1,0 +1,5 @@
+django
+djangorestfrework
+ipyhton
+environs
+httpie
