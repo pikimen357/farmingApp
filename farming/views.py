@@ -1,10 +1,13 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from farming.models import Petani, Panenan, Tanaman, Hama, PestisidaPupuk
 from farming.serializers import PetaniSerializer, PanenanSerializer, TanamanSerializer, HamaSerializer, PestisidaPupukSerializer
 
-@csrf_exempt
+@api_view(['GET', 'POST'])
 def petani_list(request):
     
     """
@@ -21,10 +24,10 @@ def petani_list(request):
         serializer = PetaniSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-@csrf_exempt
+@api_view(['GET', 'POST'])
 def panenan_list(request):
     
     if request.method == 'GET':
@@ -37,10 +40,10 @@ def panenan_list(request):
         serializer = PanenanSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@csrf_exempt
+@api_view(['GET', 'POST'])
 def tanaman_list(request):
     
     if request.method == 'GET':
@@ -64,10 +67,10 @@ def tanaman_list(request):
         # jika valid maka disimpan jika tidak kembalikan HTTP 400
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@csrf_exempt
+@api_view(['GET', 'POST'])
 def hama_list(request):
     
     """
@@ -84,10 +87,10 @@ def hama_list(request):
         serializer = HamaSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@csrf_exempt
+@api_view(['GET', 'POST'])
 def pupuk_pestisida_list(request):
     
     """
@@ -104,13 +107,13 @@ def pupuk_pestisida_list(request):
         serializer = PestisidaPupukSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
     
-@csrf_exempt
+@api_view(['GET', 'PUT', 'DELETE'])
 def petani_detail(request, username):
     """
     Retrieve, update or delete a code petani
@@ -121,7 +124,7 @@ def petani_detail(request, username):
     except Petani.DoesNotExist:
         
         # jika tidak ada kembalikan HTTP 404
-        return HttpResponse(status=404)
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET':
         serializer = PetaniSerializer(petani)
@@ -133,9 +136,9 @@ def petani_detail(request, username):
         
     elif request.method == 'DELETE':
         petani.delete()
-        return HttpResponse(status=204)
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
     
-@csrf_exempt
+@api_view(['GET', 'PUT', 'DELETE'])
 def tanaman_detail(request, pk):
     
     """
@@ -145,7 +148,7 @@ def tanaman_detail(request, pk):
     try:
         tanaman = Tanaman.objects.get(pk=pk)
     except Tanaman.DoesNotExist:
-        return HttpResponse(status=404)
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET':
         serializer = TanamanSerializer(tanaman)
@@ -157,10 +160,10 @@ def tanaman_detail(request, pk):
         
     elif request.method == 'DELETE':
         tanaman.delete()
-        return HttpResponse(status=204)
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
     
     
-@csrf_exempt
+@api_view(['GET', 'PUT', 'DELETE'])
 def panenan_detail(request, pk):
     
     """
@@ -170,7 +173,7 @@ def panenan_detail(request, pk):
     try:
         panenan = Panenan.objects.get(pk=pk)
     except Panenan.DoesNotExist:
-        return HttpResponse(status=404)
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET':
         serializer = PanenanSerializer(panenan)
@@ -182,5 +185,5 @@ def panenan_detail(request, pk):
         
     elif request.method == 'DELETE':
         panenan.delete()
-        return HttpResponse(status=204)
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
 
