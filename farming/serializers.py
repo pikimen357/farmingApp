@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from farming.models import Petani, Panenan, Tanaman, Hama, PestisidaPupuk
+from farming.models import Petani, PestisidaPupuk, Tanaman, Hama, Panenan
 
 class PetaniSerializer(serializers.ModelSerializer):
     
@@ -10,7 +10,7 @@ class PetaniSerializer(serializers.ModelSerializer):
 class PanenanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Panenan
-        fields = ['id', 'hasil_panen', 'berat_ton', 'waktu_tanam_hari']
+        fields = ['id', 'hasil_panen', 'berat_ton']
         
 class TanamanSerializer(serializers.ModelSerializer):
     class Meta:
