@@ -26,3 +26,24 @@ class HamaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hama
         fields = ['id', 'nama_hama', 'rate_bahaya', 'makhluk', 'obat']
+        
+class PanenanDetailSerializer(serializers.ModelSerializer):
+    petani_nama = serializers.CharField(source='petaninya.nama', read_only=True)
+    tanaman_nama = serializers.CharField(source='hasil_panen.nama_tanaman', read_only=True)
+    waktu_tanam = serializers.IntegerField(source='hasil_panen.waktu_tanam_hari', read_only=True)
+
+    class Meta:
+        model = Panenan
+        fields = ['id', 'petani_nama', 'tanaman_nama', 'waktu_tanam', 'berat_ton']
+        
+class HamaDetailSerializer(serializers.ModelSerializer):
+    nama_hama = serializers.CharField( read_only=True)
+    
+    # source hanya untuk mengambil data dari tabel relasi (relasi ke pestisida pupuk)
+    # bukan tabel nys sendiri (hama)
+    nama_obat = serializers.CharField(source='obat.nama_obat', read_only=True)
+    makhluk = serializers.CharField(read_only=True)
+    
+    class Meta:
+        model = Hama
+        fields = ['id', 'nama_hama', 'nama_obat', 'makhluk']

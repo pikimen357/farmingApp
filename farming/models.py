@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Petani(models.Model):
+    created = models.DateTimeField(auto_now_add=True,)
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     nama = models.CharField(max_length=100)
@@ -24,6 +25,7 @@ class PestisidaPupuk(models.Model):
         PESTISIDA = "PESTISIDA"
         PUPUK = "PUPUK"
     
+    created = models.DateTimeField(auto_now_add=True)
     jenis = models.TextField(max_length=10, choices=Jenis.choices)
     nama_obat = models.CharField(max_length=100)
     produsen = models.CharField(max_length=100)
@@ -31,12 +33,15 @@ class PestisidaPupuk(models.Model):
    
     
     def __str__(self):
-        return self.nama_obat
+        return f"{self.nama_obat} diproduksi oleh {self.produsen}, dengan warna {self.warna}"
+    
+    
 class Hama(models.Model):
     class Makhluk(models.TextChoices):
         TUMBUHAN = "TUMBUHAN"
         HEWAN = "HEWAN"
-        
+    
+    created = models.DateTimeField(auto_now_add=True)
     nama_hama = models.CharField(max_length=100)
     rate_bahaya = models.IntegerField(default=0)
     obat = models.ForeignKey(PestisidaPupuk, on_delete=models.CASCADE)
@@ -48,6 +53,7 @@ class Hama(models.Model):
     def __str__(self):
         return self.nama_hama
 class Tanaman(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
     nama_tanaman = models.CharField(max_length=100)
     jenis = models.CharField(max_length=100)
     waktu_tanam_hari = models.IntegerField(default=0)
@@ -78,4 +84,7 @@ class Panenan(models.Model):
     
     class Meta:
         ordering = ['created']
+        
+# class PanenanDtl(models.Model):
+#     pass
     

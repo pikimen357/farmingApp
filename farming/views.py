@@ -1,215 +1,5 @@
-# from django.http import HttpResponse, JsonResponse
-# from django.views.decorators.csrf import csrf_exempt
-# from rest_framework.decorators import api_view
-# from rest_framework import status
-# from rest_framework.response import Response
-# from rest_framework.parsers import JSONParser
-# from farming.models import Petani, Panenan, Tanaman, Hama, PestisidaPupuk
-# from farming.serializers import PetaniSerializer, PanenanSerializer, TanamanSerializer, HamaSerializer, PestisidaPupukSerializer
-
-# @api_view(['GET', 'POST'])
-# def petani_list(request, format=None):
-    
-#     """
-#     List all petani, or create a new petani.
-#     """
-    
-#     if request.method == 'GET':
-#         petani = Petani.objects.all()
-#         serializer = PetaniSerializer(petani, many=True)
-#         return JsonResponse(serializer.data, safe=False)
-    
-#     elif request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         serializer = PetaniSerializer(data=data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
-#         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-# @api_view(['GET', 'POST'])
-# def panenan_list(request, format=None):
-    
-#     if request.method == 'GET':
-#         panenan = Panenan.objects.all()
-#         serializer = PanenanSerializer(panenan, many=True)
-#         return JsonResponse(serializer.data, safe=False)
-#     elif request.method == 'POST':
-        
-#         data = JSONParser().parse(request)
-#         serializer = PanenanSerializer(data=data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
-#         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# @api_view(['GET', 'POST'])
-# def tanaman_list(request, format=None):
-    
-#     if request.method == 'GET':
-#         # ambil semua tanaman
-#         tanaman = Tanaman.objects.all() 
-        
-#         # serializerkan data
-#         serializer = TanamanSerializer(tanaman, many=True)
-        
-#         # kembalikan dalam bentuk json
-#         return JsonResponse(serializer.data, safe=False)
-    
-#     elif request.method == 'POST':
-        
-#         # ambil data dari request
-#         data = JSONParser().parse(request)
-        
-#         # serializerkan data
-#         serializer = TanamanSerializer(data=data)
-        
-#         # jika valid maka disimpan jika tidak kembalikan HTTP 400
-#         if serializer.is_valid():
-#             serializer.save()
-#             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
-#         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# @api_view(['GET', 'POST'])
-# def hama_list(request, format=None):
-    
-#     """
-#     List all hama, or create a new hama.
-#     """
-    
-#     if request.method == 'GET':
-#         hama = Hama.objects.all()
-#         serializer = HamaSerializer(hama, many=True)
-#         return JsonResponse(serializer.data, safe=False)
-    
-#     elif request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         serializer = HamaSerializer(data=data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
-#         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# @api_view(['GET', 'POST'])
-# def pupuk_pestisida_list(request, format=None):
-    
-#     """
-#     List all pupuk pestisida, or create a new pupuk pestisida.
-#     """
-    
-#     if request.method == 'GET':
-#         pupes = PestisidaPupuk.objects.all()
-#         serializer = PestisidaPupukSerializer(pupes, many=True)
-#         return JsonResponse(serializer.data, safe=False)
-    
-#     elif request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         serializer = PestisidaPupukSerializer(data=data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
-#         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-    
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def petani_detail(request, username, format=None):
-#     """
-#     Retrieve, update or delete a code petani
-#     """
-#     try:
-#         # coba ambil petani dengan id pk
-#         petani = Petani.objects.get(username=username)
-#     except Petani.DoesNotExist:
-        
-#         # jika tidak ada kembalikan HTTP 404
-#         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-    
-#     if request.method == 'GET':
-#         serializer = PetaniSerializer(petani)
-#         return JsonResponse(serializer.data)
-    
-#     elif request.method == 'PUT':
-#         # data = JSONParser().parse(request)
-#         # serializer = PetaniSerializer(petani, data=data)
-#         serializer = PetaniSerializer(petani, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-        
-#     elif request.method == 'DELETE':
-#         petani.delete()
-#         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
-    
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def tanaman_detail(request, pk, format=None):
-    
-#     """
-#     Retrieve, update or delete a code tanaman
-#     """
-    
-#     try:
-#         tanaman = Tanaman.objects.get(pk=pk)
-#     except Tanaman.DoesNotExist:
-#         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-    
-#     if request.method == 'GET':
-#         serializer = TanamanSerializer(tanaman)
-#         return JsonResponse(serializer.data)
-    
-#     elif request.method == 'PUT':
-#         # data = JSONParser().parse(request)
-#         # serializer = TanamanSerializer(tanaman, data=data)
-#         serializer = TanamanSerializer(tanaman, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-#     elif request.method == 'DELETE':
-#         tanaman.delete()
-#         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
-    
-    
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def panenan_detail(request, pk, format=None):
-    
-#     """
-#     Retrieve, update or delete a code tanaman
-#     """
-    
-#     try:
-#         panenan = Panenan.objects.get(pk=pk)
-#     except Panenan.DoesNotExist:
-#         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-    
-#     if request.method == 'GET':
-#         serializer = PanenanSerializer(panenan)
-#         return JsonResponse(serializer.data)
-    
-   
-    
-#     elif request.method == 'PUT':
-#         # data = JSONParser().parse(request)
-#         # serializer = PanenanSerializer(panenan, data=data)
-#         serializer = PanenanSerializer(panenan, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-     # TIDAK BOLEH MENGHAPUS PANENAN !!
-     
-    # elif request.method == 'DELETE':
-    #     panenan.delete()
-    #     return HttpResponse(status=status.HTTP_204_NO_CONTENT)
-
-
 from farming.models import Petani, PestisidaPupuk, Tanaman, Hama, Panenan
-from farming.serializers import PetaniSerializer, PanenanSerializer, HamaSerializer, TanamanSerializer, PestisidaPupukSerializer
+from farming.serializers import PetaniSerializer, PanenanSerializer, HamaSerializer, TanamanSerializer, PestisidaPupukSerializer, PanenanDetailSerializer, HamaDetailSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -475,3 +265,25 @@ class TanamanDetail(APIView):
         tanaman = self.get_object(nama_tanaman)
         tanaman.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# menampilkan relasi antara tabel Panenan --> Petani & Tanaman
+class PanenanDetailAPIView(APIView):
+    """
+    API view untuk mendapatkan data detail Panenan.
+    """
+
+    def get(self, request, *args, **kwargs):
+        panenan = Panenan.objects.all()  # Ambil semua data Panenan
+        serializer = PanenanDetailSerializer(panenan, many=True)  # Serialize data
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class HamaDetailAPIView(APIView):
+    """
+    API view untuk mendapatkan data detail hama.
+    """
+    
+    def get(self, request, *args, **kwargs):
+        hama = Hama.objects.all()
+        serializer = HamaDetailSerializer(hama, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
