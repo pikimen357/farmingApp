@@ -307,28 +307,54 @@ class PetaniDetail(APIView):
     Retrieve, update or delete a petani instance
     """
     
+    # mengambil objek petani
     def get_object(self, username):
         try:
+            # mencari petani berdasarkan username
             return Petani.objects.get(username=username)
+        
+        # jika petani tidak ada
         except Petani.DoesNotExist:
             return Http404
         
     def get(self, request, username, format=None):
+        
+        # mencari petani berdasarkan username
         petani = self.get_object(username)
+        
+        # menjadikan json dengan serializer objek petani 
         serialzer = PetaniSerializer(petani)
+        
+        # mengembalikan data yang telah di serializer(diubah ke json) berupa response
         return Response(serialzer.data)
     
+    # membuat objek petani baru
     def put(self, request, username, format=None):
+        
+        # membuat objek petani berdasarkan username
         petani = self.get_object(username)
+        
+        # ubah ke dalam json(srializer) data yang direquest
         serializer = PetaniSerializer(petani, data=request.data)
+        
+        # jika data petani valid maka simpan dan kembalikan response datanya
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        
+        # jika tidak otomatis error 400 bad request
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    # menghapus objek petani
     def delete(self, request, username, format=None):
+        
+        # mencari nama
         petani = self.get_object(username)
+        
+        # menghapus petani
         petani.delete()
+        
+        # kembalikan respon 204 
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 class PanenanDetail(APIView):
