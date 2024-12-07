@@ -31,10 +31,16 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
     petani_nama = serializers.CharField(source='petaninya.nama', read_only=True)
     tanaman_nama = serializers.CharField(source='hasil_panen.nama_tanaman', read_only=True)
     waktu_tanam = serializers.IntegerField(source='hasil_panen.waktu_tanam_hari', read_only=True)
+    harga = serializers.IntegerField(source='hasil_panen.harga_perTon', read_only=True)
+    total_harga = serializers.SerializerMethodField()
 
     class Meta:
         model = Panenan
-        fields = ['id', 'petani_nama', 'tanaman_nama', 'waktu_tanam', 'berat_ton']
+        fields = ['id', 'petani_nama', 'tanaman_nama', 'waktu_tanam', 'berat_ton','harga', 'total_harga']
+        
+    def get_total_harga(self, obj):
+        # Menghitung total pendapatan
+        return obj.berat_ton * obj.hasil_panen.harga_perTon
         
 class HamaDetailSerializer(serializers.ModelSerializer):
     nama_hama = serializers.CharField( read_only=True)
