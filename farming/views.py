@@ -10,7 +10,7 @@ class PetaniList(APIView):
     List all petani, or create a new petani.
     """
     
-    def get(self, request, fromat=None):
+    def get(self, request, format=None):
         petani = Petani.objects.all()
         serializer = PetaniSerializer(petani, many=True)
         return Response(serializer.data)
@@ -27,7 +27,7 @@ class PanenanList(APIView):
     List all panenan, or create a new panenan.
     """
     
-    def get(self, request, fromat=None):
+    def get(self, request, format=None):
         panenan = Panenan.objects.all()
         serializer = PanenanSerializer(panenan, many=True)
         return Response(serializer.data)
@@ -44,7 +44,7 @@ class TanamanList(APIView):
     List all tanaman, or create a new tanaman.
     """
     
-    def get(self, request, fromat=None):
+    def get(self, request, format=None):
         tanaman = Tanaman.objects.all()
         serializer = TanamanSerializer(tanaman, many=True)
         return Response(serializer.data)
@@ -60,7 +60,7 @@ class HamaList(APIView):
     List all hama, or create a new hama.
     """
     
-    def get(self, request, fromat=None):
+    def get(self, request, format=None):
         hama = Hama.objects.all()
         serializer = HamaSerializer(hama, many=True)
         return Response(serializer.data)
@@ -77,7 +77,7 @@ class PestisidaPupukList(APIView):
     List all pestisida/pupuk, or create a new pestisida/pupuk.
     """
     
-    def get(self, request, fromat=None):
+    def get(self, request, format=None):
         pupes = PestisidaPupuk.objects.all()
         serializer = PestisidaPupukSerializer(pupes, many=True)
         return Response(serializer.data)
