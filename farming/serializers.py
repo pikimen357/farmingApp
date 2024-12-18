@@ -29,6 +29,7 @@ class HamaSerializer(serializers.ModelSerializer):
         
 class PanenanDetailSerializer(serializers.ModelSerializer):
     petani_nama = serializers.CharField(source='petaninya.nama', read_only=True)
+    # tanaman_nama = serializers.CharField(source='hasil_panen.nama_tanaman', read_only=True)
     tanaman_nama = serializers.CharField(source='hasil_panen.nama_tanaman', read_only=True)
     waktu_tanam = serializers.IntegerField(source='hasil_panen.waktu_tanam_hari', read_only=True)
     tanggal_panen = serializers.DateTimeField(source='created')

@@ -40,18 +40,24 @@ class PetaniDetail(generics.RetrieveUpdateDestroyAPIView):
     
 
 
-# class PanenanDetail(RetrieveUpdateAPIView):
-#     serializer_class = PanenanDetailSerializer
-#     lookup_field = 'tanaman_nama'  # Menggunakan tanaman_nama sebagai path parameter
+class PanenanDetail(RetrieveUpdateAPIView):
+    serializer_class = PanenanDetailSerializer
+    lookup_field = 'hasil_panen'  # Menggunakan tanaman_nama sebagai path parameter
 
-#     def get_queryset(self):
-#         queryset = Panenan.objects.all()
-#         petani_nama = self.request.query_params.get('petani_nama')
+    def get_queryset(self):
+        queryset = Panenan.objects.all()
+        #mengambil nama petani dari parameter url 
+        petani_nama = self.request.query_params.get('petani_nama') 
         
-#         if petani_nama is not None:
-#             queryset = queryset.filter(petaninya__nama=petani_nama)
+        if petani_nama is not None:
+            queryset = queryset.filter(petaninya__nama=petani_nama)
             
-#         return queryset
+        return queryset
+    
+    def get_object(self):
+        # Override untuk mendukung lookup melalui relasi
+        hasil_panen = self.kwargs.get(self.lookup_field)  # Ambil tanaman_nama dari URL
+        return self.get_queryset().get(hasil_panen=hasil_panen)
 
     
     
