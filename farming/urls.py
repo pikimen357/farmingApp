@@ -9,7 +9,7 @@ urlpatterns = [
     path('v1/pestisida-pupuk/', views.PupukPestisidaList.as_view()),
     path('v1/tanaman/', views.TanamanList.as_view()),
     path('v1/petani/<str:username>/', views.PetaniDetail.as_view()),
-    # path('v1/pestisida-pupuk/<str:nama_obat>/', views.PupukPestisidaDetail.as_view()),
+    path('v1/pestisida-pupuk/<str:nama_obat>/', views.PupukPestisidaDetail.as_view()),
     # path('v1/hama/<str:nama_hama>/', views.HamaDetail.as_view()),
     
     path('v1/panenan/<int:hasil_panen>/', views.PanenanDetail.as_view(), name='panenan-detail'),

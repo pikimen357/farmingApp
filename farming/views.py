@@ -59,5 +59,10 @@ class PanenanDetail(RetrieveUpdateAPIView):
         hasil_panen = self.kwargs.get(self.lookup_field)  # Ambil tanaman_nama dari URL
         return self.get_queryset().get(hasil_panen=hasil_panen)
 
+class PupukPestisidaDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = PestisidaPupukSerializer
     
     
+    def get_object(self):
+        nama_obat = self.kwargs['nama_obat']
+        return PestisidaPupuk.objects.get(nama_obat=nama_obat)

@@ -26,7 +26,9 @@ class HamaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hama
         fields = ['id', 'nama_hama', 'rate_bahaya', 'makhluk', 'obat']
-        
+
+
+# Serializer for table relation panenan --> tanaman, panenan --> petani 
 class PanenanDetailSerializer(serializers.ModelSerializer):
     petani_nama = serializers.CharField(source='petaninya.nama', read_only=True)
     # tanaman_nama = serializers.CharField(source='hasil_panen.nama_tanaman', read_only=True)
@@ -43,7 +45,8 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
     def get_total_harga(self, obj):
         # Menghitung total pendapatan
         return obj.berat_ton * obj.hasil_panen.harga_perTon
-        
+
+# Serializer for table relation panenan -->- tanaman
 class HamaDetailSerializer(serializers.ModelSerializer):
     nama_hama = serializers.CharField( read_only=True)
     

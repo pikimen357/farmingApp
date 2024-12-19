@@ -44,7 +44,7 @@ class Hama(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     nama_hama = models.CharField(max_length=100)
     rate_bahaya = models.IntegerField(default=0)
-    obat = models.ForeignKey(PestisidaPupuk, on_delete=models.CASCADE)
+    obat = models.ForeignKey(PestisidaPupuk, on_delete=models.RESTRICT)
     makhluk =models.CharField(max_length=20, choices=Makhluk.choices)
     
     class Meta:
@@ -70,8 +70,8 @@ class Tanaman(models.Model):
 class Panenan(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     # foreign key merujuk pada id tabel Tanaman
-    hasil_panen = models.ForeignKey(Tanaman, on_delete=models.CASCADE)
-    petaninya = models.ForeignKey(Petani, on_delete=models.CASCADE)
+    hasil_panen = models.ForeignKey(Tanaman, on_delete=models.RESTRICT)
+    petaninya = models.ForeignKey(Petani, on_delete=models.RESTRICT)
     berat_ton = models.IntegerField(default=0)
     # waktu_tanam_hari = models.IntegerField(default=0)
     
