@@ -9,6 +9,7 @@ urlpatterns = [
     path('hama/<str:nama_hama>/', views.HamaDetailView.as_view(), name=""),
     path('pestisida-pupuk/', views.PupukPestisidaList.as_view()),
     path('tanaman/', views.TanamanList.as_view()),
+    path('tanaman/<str:nama_tanaman>/', views.TanamanDetail.as_view()),
     path('petani-detail/<str:username>/', views.PetaniDetail.as_view()),
     path('pestisida-pupuk/<str:nama_obat>/', views.PupukPestisidaDetail.as_view()),
     # path('hama/<str:nama_hama>/', views.HamaDetail.as_view()),
