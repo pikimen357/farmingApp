@@ -9,7 +9,8 @@ class Petani(models.Model):
     luas_tanah = models.IntegerField(default=0)
     
     class Meta:
-        ordering = ['luas_tanah']
+        # tanda - sebelum luas tanah menandakan Descending
+        ordering = ['-luas_tanah']
     
     def __str__(self):
         return self.nama
@@ -33,9 +34,8 @@ class PestisidaPupuk(models.Model):
    
     
     def __str__(self):
-        return f"{self.nama_obat} diproduksi oleh {self.produsen}, dengan warna {self.warna}"
-    
-    
+        return f"{self.nama_obat} diproduksi {self.produsen}, warna {self.warna}"
+     
 class Hama(models.Model):
     class Makhluk(models.TextChoices):
         TUMBUHAN = "TUMBUHAN"

@@ -34,7 +34,7 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
     # tanaman_nama = serializers.CharField(source='hasil_panen.nama_tanaman', read_only=True)
     tanaman_nama = serializers.CharField(source='hasil_panen.nama_tanaman', read_only=True)
     waktu_tanam = serializers.IntegerField(source='hasil_panen.waktu_tanam_hari', read_only=True)
-    tanggal_panen = serializers.DateTimeField(source='created')
+    tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S')
     harga = serializers.IntegerField(source='hasil_panen.harga_perTon', read_only=True)
     total_harga = serializers.SerializerMethodField()
 
