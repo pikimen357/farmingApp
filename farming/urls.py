@@ -15,7 +15,8 @@ urlpatterns = [
     # path('hama/<str:nama_hama>/', views.HamaDetail.as_view()),
     
     path('panenan/<str:hasil_panen__nama_tanaman>/', views.PanenanDetailView.as_view(), name='panenan-detail'),
-    path('panenan/', views.PanenanList.as_view()),
+    path('panenan-detail/', views.PanenanDetailList.as_view()),
+    path('panenan-list/', views.PanenanList.as_view()),
     # path('hama/', views.HamaDetailAPIView.as_view()),
 ]
 
