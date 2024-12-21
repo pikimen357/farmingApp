@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import UniqueConstraint
 
 # Create your models here.
 class Petani(models.Model):
@@ -9,6 +10,9 @@ class Petani(models.Model):
     luas_tanah = models.IntegerField(default=0)
     
     class Meta:
+        constraints = [
+            UniqueConstraint(fields=['username', 'nama'], name='unique_username_nama')
+        ]
         # tanda - sebelum luas tanah menandakan Descending
         ordering = ['-luas_tanah']
     
@@ -48,7 +52,7 @@ class Hama(models.Model):
     makhluk =models.CharField(max_length=20, choices=Makhluk.choices)
     
     class Meta:
-        ordering = ['rate_bahaya']
+        ordering = ['-rate_bahaya']
     
     def __str__(self):
         return self.nama_hama
@@ -61,7 +65,7 @@ class Tanaman(models.Model):
     peluang_hama = models.ForeignKey(Hama, on_delete=models.CASCADE)
     
     class Meta:
-        ordering = ['harga_perTon']
+        ordering = ['-harga_perTon']
     
     def __str__(self):
         return self.nama_tanaman

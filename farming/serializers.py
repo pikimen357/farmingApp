@@ -15,7 +15,7 @@ class PanenanSerializer(serializers.ModelSerializer):
 class TanamanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tanaman
-        fields = ['id', 'nama_tanaman', 'jenis', 'waktu_tanam_hari']
+        fields = ['id', 'nama_tanaman', 'jenis', 'waktu_tanam_hari', 'harga_perTon', 'peluang_hama']
 
 class PestisidaPupukSerializer(serializers.ModelSerializer):
     class Meta:
