@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "farming.apps.FarmingConfig",
+    "farming_v3.apps.FarmingV3Config",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,7 +82,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "OPTIONS": {
-            "read_default_file": "/media/vidky/DATA/Python/mybackend/my.cnf",
+            "read_default_file": "/media/vidky/DATA/Development/backendPertanian?/mybackend/my.cnf",
             "init_command": "SET default_storage_engine=INNODB",
         },
     }
