@@ -66,12 +66,12 @@ class PanenanDetailView(generics.RetrieveUpdateAPIView):
     
     def get_queryset(self):
         queryset = Panenan.objects.all()
-    #     #mengambil nama petani dari parameter url 
-    #     petani_nama = self.request.query_params.get('petani_nama') 
+        #mengambil nama petani dari parameter url 
+        petani_nama = self.request.query_params.get('petani_nama') 
         
-    #     if petani_nama:
-    #         # icontains untuk mengambil sebagian petani_nama Vidky -> dky, idk, Vid, dan lain-lain
-    #         queryset = queryset.filter(petaninya__nama__icontains=petani_nama)
+        if petani_nama:
+            # icontains untuk mengambil sebagian petani_nama Vidky -> dky, idk, Vid, dan lain-lain
+            queryset = queryset.filter(owner__username__icontains=petani_nama)
             
         return queryset
     

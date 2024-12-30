@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import UniqueConstraint
+from django.contrib.auth.models import User
 
 # Create your models here.
 # class Petani(models.Model):
@@ -78,7 +79,7 @@ class Panenan(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     # foreign key merujuk pada id tabel Tanaman
     hasil_panen = models.ForeignKey(Tanaman, on_delete=models.RESTRICT)
-    # petaninya = models.ForeignKey(Petani, on_delete=models.RESTRICT)
+    # petaninya = models.ForeignKey('auth.User', related_name='panenan', on_delete=models.CASCADE)
     berat_ton = models.IntegerField(default=0)
     owner = models.ForeignKey('auth.User', related_name='panenan', on_delete=models.CASCADE)
     # waktu_tanam_hari = models.IntegerField(default=0)
