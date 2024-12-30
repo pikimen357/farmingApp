@@ -23,3 +23,5 @@ urlpatterns = [
     path('v3/', include('farming_v3.urls')),
     path('api-auth/', include('rest_framework.urls'))
 ]
+
+# Hesoyam1!

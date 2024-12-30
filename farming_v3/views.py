@@ -8,19 +8,18 @@ from rest_framework import permissions
 from farming_v3.permissions import IsOwnerOrReadOnly
 
 # GENERAL OBJECTS
-# class PetaniList(generics.ListCreateAPIView):
-#     queryset = Petani.objects.all()
-#     serializer_class = PetaniSerializer
     
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class PanenanDetailList(generics.ListCreateAPIView):
+#  user cannot add panenan here
+class PanenanDetailList(generics.ListAPIView):
     queryset = Panenan.objects.all()
     serializer_class = PanenanDetailSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    
+
+# user can add panenan here
 class PanenanList(generics.ListCreateAPIView):
     queryset = Panenan.objects.all()
     serializer_class = PanenanSerializer
@@ -64,12 +63,9 @@ class PanenanDetailView(generics.RetrieveUpdateAPIView):
     lookup_field = 'hasil_panen__nama_tanaman'  # Menggunakan tanaman_nama sebagai path parameter
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     
+    
     def get_queryset(self):
         queryset = Panenan.objects.all()
-        return queryset
-    
-    # def get_queryset(self):
-    #     queryset = Panenan.objects.all()
     #     #mengambil nama petani dari parameter url 
     #     petani_nama = self.request.query_params.get('petani_nama') 
         
@@ -77,7 +73,7 @@ class PanenanDetailView(generics.RetrieveUpdateAPIView):
     #         # icontains untuk mengambil sebagian petani_nama Vidky -> dky, idk, Vid, dan lain-lain
     #         queryset = queryset.filter(petaninya__nama__icontains=petani_nama)
             
-    #     return queryset
+        return queryset
     
     def get_object(self):
         # Override untuk mendukung lookup melalui relasi
