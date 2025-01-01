@@ -9,10 +9,11 @@ from django.contrib.auth.models import User
 #         fields = ('id', 'username','password','nama', 'luas_tanah')
         
 class PanenanSerializer(serializers.ModelSerializer):
+    tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S')
     class Meta:
         model = Panenan
         owner = serializers.ReadOnlyField(source='owner.username')
-        fields = ['id', 'hasil_panen', 'berat_ton']
+        fields = ['id', 'hasil_panen', 'berat_ton', 'tanggal_panen']
         
 class TanamanSerializer(serializers.ModelSerializer):
     class Meta:

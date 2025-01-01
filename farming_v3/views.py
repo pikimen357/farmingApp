@@ -58,7 +58,7 @@ class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
-class PanenanDetailView(generics.RetrieveUpdateAPIView):
+class PanenanDetailView(generics.RetrieveAPIView):
     serializer_class = PanenanDetailSerializer
     lookup_field = 'hasil_panen__nama_tanaman'  # Menggunakan tanaman_nama sebagai path parameter
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
