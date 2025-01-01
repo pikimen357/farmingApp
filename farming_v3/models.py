@@ -2,24 +2,6 @@ from django.db import models
 from django.db.models import UniqueConstraint
 from django.contrib.auth.models import User
 
-# Create your models here.
-# class Petani(models.Model):
-#     created = models.DateTimeField(auto_now_add=True,)
-#     username = models.CharField(max_length=100)
-#     password = models.CharField(max_length=100)
-#     nama = models.CharField(max_length=100)
-#     luas_tanah = models.IntegerField(default=0)
-    
-#     class Meta:
-#         constraints = [
-#             UniqueConstraint(fields=['username', 'nama'], name='unique_username_nama')
-#         ]
-#         # tanda - sebelum luas tanah menandakan Descending
-#         ordering = ['-luas_tanah']
-    
-#     def __str__(self):
-#         return self.nama
-
 class PestisidaPupuk(models.Model):
     class Warna(models.TextChoices):
         HITAM = "HITAM"
@@ -36,7 +18,6 @@ class PestisidaPupuk(models.Model):
     nama_obat = models.CharField(max_length=100, unique=True)
     produsen = models.CharField(max_length=100)
     warna = models.TextField(max_length=10, choices=Warna.choices)
-    # owner = models.ForeignKey('auth.User', related_name='pestisida_pupuk', on_delete=models.CASCADE)
    
     
     def __str__(self):
@@ -52,7 +33,6 @@ class Hama(models.Model):
     rate_bahaya = models.IntegerField(default=0)
     obat = models.ForeignKey(PestisidaPupuk, on_delete=models.RESTRICT)
     makhluk =models.CharField(max_length=20, choices=Makhluk.choices)
-    # owner = models.ForeignKey('auth.User', related_name='hama', on_delete=models.CASCADE)
     
     class Meta:
         ordering = ['-rate_bahaya']
@@ -77,23 +57,15 @@ class Tanaman(models.Model):
     
 class Panenan(models.Model):
     created = models.DateTimeField(auto_now_add=True)
+    
     # foreign key merujuk pada id tabel Tanaman
     hasil_panen = models.ForeignKey(Tanaman, on_delete=models.RESTRICT)
-    # petaninya = models.ForeignKey('auth.User', related_name='panenan', on_delete=models.CASCADE)
     berat_ton = models.IntegerField(default=0)
-    owner = models.ForeignKey('auth.User', related_name='panenan', on_delete=models.CASCADE)
-    # waktu_tanam_hari = models.IntegerField(default=0)
-    
-    # @property
-    # def waktu_tanam(self):
-    #     return self.hasil_panen.waktu_tanam_hari
+    owner = models.ForeignKey('auth.User', related_name='panenan', on_delete=models.RESTRICT)
 
     def __str__(self):
         return f"{self.hasil_panen.nama_tanaman} - {self.berat_ton} ton"
     
     class Meta:
         ordering = ['created']
-        
-# class PanenanDtl(models.Model):
-#     pass
-    
+
