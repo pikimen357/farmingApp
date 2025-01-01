@@ -3,3 +3,6 @@ djangorestfrework
 ipyhton
 environs
 httpie
+
+# postgre db
+psycopg2-binary

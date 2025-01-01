@@ -79,14 +79,16 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # settings.py
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "OPTIONS": {
-            "read_default_file": "/media/vidky/DATA/Development/backendPertanian?/mybackend/my.cnf",
-            "init_command": "SET default_storage_engine=INNODB",
-        },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pertanian3',
+        'USER': 'vidky',
+        'PASSWORD': '***',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
+# python3 manage.py migrate --run-syncdb
 
 
 # Password validation

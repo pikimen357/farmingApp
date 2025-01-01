@@ -63,7 +63,6 @@ class PanenanDetailView(generics.RetrieveUpdateAPIView):
     lookup_field = 'hasil_panen__nama_tanaman'  # Menggunakan tanaman_nama sebagai path parameter
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     
-    
     def get_queryset(self):
         queryset = Panenan.objects.all()
         #mengambil nama petani dari parameter url 
