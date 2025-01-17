@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'api',
     'corsheaders',
 ]
 
@@ -135,3 +136,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ALLOW_ALL_ORIGINS = True  # Sebaiknya hanya diaktifkan untuk pengembangan
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES" : [
+        "rest_framework.authentication.SessionAuthentication",
+        "api.authentication.TokenAuthentication"    
+    ],
+    "DEFAULT_PERMISSION_CLASSES" : [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+    ]
+}
+
