@@ -19,7 +19,7 @@ class TanamanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tanaman
         owner = serializers.ReadOnlyField(source='owner.username')
-        fields = ['id', 'nama_tanaman', 'jenis', 'waktu_tanam_hari', 'harga_perTon', 'peluang_hama']
+        fields = ['id', 'nama_tanaman', 'jenis', 'waktu_tanam_hari', 'harga_perTon', 'peluang_hama', 'owner']
 
 class PestisidaPupukSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,8 +34,6 @@ class HamaSerializer(serializers.ModelSerializer):
 
 # Serializer for table relation panenan --> tanaman, panenan --> petani 
 class PanenanDetailSerializer(serializers.ModelSerializer):
-    # petani_nama = serializers.CharField(source='petaninya.nama', read_only=True)
-    # tanaman_nama = serializers.CharField(source='hasil_panen.nama_tanaman', read_only=True)
     tanaman_nama = serializers.CharField(source='hasil_panen.nama_tanaman', read_only=True)
     waktu_tanam = serializers.IntegerField(source='hasil_panen.waktu_tanam_hari', read_only=True)
     tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S')
@@ -66,10 +64,10 @@ class HamaDetailSerializer(serializers.ModelSerializer):
         
         
 class UserSerializer(serializers.ModelSerializer):
+    
+    # untuk timbal balik antara relasi, karena jika  tanaman --> user tidak secara otomatis tanaman --> user 
     panenan = serializers.PrimaryKeyRelatedField(many=True, queryset=Panenan.objects.all())
     tanaman = serializers.PrimaryKeyRelatedField(many=True, queryset=Tanaman.objects.all())
-    # pestisida_pupuk = serializers.PrimaryKeyRelatedField(many=True, queryset=PestisidaPupuk.objects.all())
-    # hama = serializers.PrimaryKeyRelatedField(many=True, queryset=Hama.objects.all())
     
     class Meta:
         model = User

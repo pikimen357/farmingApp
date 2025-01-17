@@ -19,7 +19,10 @@ class PestisidaPupuk(models.Model):
     produsen = models.CharField(max_length=100)
     warna = models.TextField(max_length=10, choices=Warna.choices)
    
-    
+    class Meta:
+        ordering = ['created']
+        db_table = 'pestisida_pupuk'    
+        
     def __str__(self):
         return f"{self.nama_obat} diproduksi {self.produsen}, warna {self.warna}"
      
@@ -36,6 +39,7 @@ class Hama(models.Model):
     
     class Meta:
         ordering = ['-rate_bahaya']
+        db_table = 'hama'
     
     def __str__(self):
         return self.nama_hama
@@ -50,6 +54,7 @@ class Tanaman(models.Model):
     
     class Meta:
         ordering = ['-harga_perTon']
+        db_table = 'tanaman'
     
     def __str__(self):
         return self.nama_tanaman
@@ -68,4 +73,5 @@ class Panenan(models.Model):
     
     class Meta:
         ordering = ['created']
+        db_table = 'panenan'
 

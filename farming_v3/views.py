@@ -44,11 +44,11 @@ class PupukPestisidaList(generics.ListCreateAPIView):
     queryset = PestisidaPupuk.objects.all()
     serializer_class = PestisidaPupukSerializer
 
-
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
+# can't update panenan, when panenan already exist with same farmer  (must be updated)
 class PanenanDetailView(generics.RetrieveAPIView):
     serializer_class = PanenanDetailSerializer
     lookup_field = 'hasil_panen__nama_tanaman'  # Menggunakan tanaman_nama sebagai path parameter
