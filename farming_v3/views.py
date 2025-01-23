@@ -1,11 +1,11 @@
 from farming_v3.models import  PestisidaPupuk, Tanaman, Hama, Panenan
 from farming_v3.serializers import  PanenanSerializer, HamaSerializer, TanamanSerializer, PestisidaPupukSerializer, PanenanDetailSerializer, HamaDetailSerializer
-from rest_framework import generics
-from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework import generics, mixins, permissions
 from django.contrib.auth.models import User
 from farming_v3.serializers import UserSerializer
-from rest_framework import permissions
+from rest_framework.response  import Response
 from farming_v3.permissions import IsOwnerOrReadOnly
+from api.mixins import StaffEditorPermissionMixin
 
 # GENERAL OBJECTS
     
@@ -17,34 +17,60 @@ class UserList(generics.ListAPIView):
 class PanenanDetailList(generics.ListAPIView):
     queryset = Panenan.objects.all()
     serializer_class = PanenanDetailSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+   
 
 # user can add panenan here
-class PanenanList(generics.ListCreateAPIView):
+class PanenanList(  StaffEditorPermissionMixin,
+                    generics.ListCreateAPIView):
     queryset = Panenan.objects.all()
     serializer_class = PanenanSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.DjangoModelPermissions]
     
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        hasil_panen = serializer.validated_data.get('hasil_panen')
+        owner = self.request.user
+        berat_ton = serializer.validated_data.get('berat_ton', 0)
+        created = serializer.validated_data.get('created')
+        
+        panen_obj, createdd = Panenan.objects.get_or_create(
+            hasil_panen=hasil_panen,
+            owner=owner,
+            defaults={
+                'berat_ton' : berat_ton,
+                'created' : created,
+            }
+        )
+        
+        if not createdd:
+            # Jika data sudah ada, tambahkan jumlah ton dan perbarui tanggal panen
+            panen_obj.berat_ton += berat_ton
+            panen_obj.created
+            panen_obj.save()
     
-class TanamanList(generics.ListCreateAPIView):
+    # def perform_create(self, serializer):
+    #     serializer.save(owner=self.request.user)
+    
+class TanamanList(StaffEditorPermissionMixin, 
+                  generics.ListCreateAPIView):
     queryset = Tanaman.objects.all()
     serializer_class  = TanamanSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    
     
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
     
-class HamaList(generics.ListCreateAPIView):
+class HamaList(StaffEditorPermissionMixin,
+               generics.ListCreateAPIView):
     queryset = Hama.objects.all()
     serializer_class = HamaSerializer
     
-class PupukPestisidaList(generics.ListCreateAPIView):
+class PupukPestisidaList(StaffEditorPermissionMixin, 
+                         generics.ListCreateAPIView):
     queryset = PestisidaPupuk.objects.all()
     serializer_class = PestisidaPupukSerializer
 
-class UserDetail(generics.RetrieveAPIView):
+class UserDetail(StaffEditorPermissionMixin, 
+                 generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
@@ -52,7 +78,7 @@ class UserDetail(generics.RetrieveAPIView):
 class PanenanDetailView(generics.RetrieveAPIView):
     serializer_class = PanenanDetailSerializer
     lookup_field = 'hasil_panen__nama_tanaman'  # Menggunakan tanaman_nama sebagai path parameter
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    
     
     def get_queryset(self):
         queryset = Panenan.objects.all()
@@ -87,7 +113,7 @@ class HamaDetailView(generics.RetrieveUpdateDestroyAPIView):
     
 class TanamanDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TanamanSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    
     
     def get_object(self):
         nama_tanaman = self.kwargs['nama_tanaman']

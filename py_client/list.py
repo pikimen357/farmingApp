@@ -18,8 +18,10 @@ if auth_response.status_code == 200:
     headers = {
         "Authorization" : f"Bearer {token}"
     }
+    
+    search_endpoint = input("Search endpoint : ")
 
-    endpoint = "http://localhost:8000/v3/tanaman/"
+    endpoint = f"http://localhost:8000/v3/{search_endpoint}/"
 
     get_response = requests.get(endpoint, headers=headers) 
     print(get_response.json())

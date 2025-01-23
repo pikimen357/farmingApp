@@ -2,11 +2,6 @@ from rest_framework import serializers
 from farming_v3.models import  PestisidaPupuk, Tanaman, Hama, Panenan
 from django.contrib.auth.models import User
 
-# class PetaniSerializer(serializers.ModelSerializer):
-    
-#     class Meta:
-#         model = Petani
-#         fields = ('id', 'username','password','nama', 'luas_tanah')
         
 class PanenanSerializer(serializers.ModelSerializer):
     tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S')
@@ -16,6 +11,7 @@ class PanenanSerializer(serializers.ModelSerializer):
         fields = ['id', 'hasil_panen', 'berat_ton', 'tanggal_panen']
         
 class TanamanSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Tanaman
         owner = serializers.ReadOnlyField(source='owner.username')

@@ -137,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True  # Sebaiknya hanya diaktifkan untuk pengembangan
 
-
+# for default authentication & permission in view
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES" : [
         "rest_framework.authentication.SessionAuthentication",

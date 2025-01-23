@@ -8,15 +8,15 @@ import json
 
 from farming_v3.serializers import TanamanSerializer, PanenanSerializer, HamaSerializer, PestisidaPupukSerializer
 
-@api_view(["POST"])
-def api_home(request, *args, **kwargs):
-    '''
-    DRF API View
-    '''
+# @api_view(["POST", "GET"])
+# def api_home(request, *args, **kwargs):
+#     '''
+#     DRF API View
+#     '''
     
-    serializer = TanamanSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        print(serializer.data)
-        return Response(serializer.data)
+#     serializer = TanamanSerializer(data=request.data)
+#     if serializer.is_valid(raise_exception=True):
+#         print(serializer.data)
+#         return Response(serializer.data)
     
-    return Response({"invalid" : "not good data"}, status=400)
+#     return Response({"invalid" : "not good data"}, status=400)
