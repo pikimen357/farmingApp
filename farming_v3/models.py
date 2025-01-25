@@ -1,6 +1,9 @@
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.contrib.auth.models import User
+from django.conf import settings
+
+User = settings.AUTH_USER_MODEL # 'auth.User'
 
 class PestisidaPupuk(models.Model):
     class Warna(models.TextChoices):
@@ -50,7 +53,7 @@ class Tanaman(models.Model):
     waktu_tanam_hari = models.IntegerField(default=0)
     harga_perTon = models.IntegerField(default=0)
     peluang_hama = models.ForeignKey(Hama, on_delete=models.CASCADE)
-    owner = models.ForeignKey('auth.User', related_name='tanaman', on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='tanaman', on_delete=models.CASCADE)
     
     class Meta:
         ordering = ['-harga_perTon']
@@ -66,7 +69,7 @@ class Panenan(models.Model):
     # foreign key merujuk pada id tabel Tanaman
     hasil_panen = models.ForeignKey(Tanaman, on_delete=models.RESTRICT)
     berat_ton = models.IntegerField(default=0)
-    owner = models.ForeignKey('auth.User', related_name='panenan', on_delete=models.RESTRICT)
+    owner = models.ForeignKey(User, related_name='panenan', on_delete=models.RESTRICT)
 
     def __str__(self):
         return f"{self.hasil_panen.nama_tanaman} - {self.berat_ton} ton"

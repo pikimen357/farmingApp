@@ -32,6 +32,7 @@ class PanenanList(  StaffEditorPermissionMixin,
         berat_ton = serializer.validated_data.get('berat_ton', 0)
         created = serializer.validated_data.get('created')
         
+        # 
         panen_obj, createdd = Panenan.objects.get_or_create(
             hasil_panen=hasil_panen,
             owner=owner,

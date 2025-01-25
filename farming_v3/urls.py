@@ -15,11 +15,11 @@ urlpatterns = [
     path('pestisida-pupuk/<str:nama_obat>/', views.PupukPestisidaDetail.as_view()),
     
     path('tanaman/', views.TanamanList.as_view()),
-    path('tanaman/<str:nama_tanaman>/', views.TanamanDetail.as_view()),
+    path('tanaman/<str:nama_tanaman>/', views.TanamanDetail.as_view(), name='tanaman-edit'),
     
     path('panenan/<str:hasil_panen__nama_tanaman>/', views.PanenanDetailView.as_view(), name='panenan-detail'),
     path('panenan/', views.PanenanDetailList.as_view()),
-    path('panenan-list/', views.PanenanList.as_view()),
+    path('panenan-create/', views.PanenanList.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
