@@ -28,11 +28,23 @@ class TanamanSerializer(serializers.ModelSerializer):
     
 
     edit_url = serializers.SerializerMethodField(read_only=True)
-    related_tanaman = TanamanInlineSerializer(source='owner.tanaman.all', read_only=True, many=True) 
+    # related_tanaman = TanamanInlineSerializer(source='owner.tanaman.all', read_only=True, many=True) 
     class Meta:
         model = Tanaman
         owner = UserPublicSerializer(source='user', read_only=True)
-        fields = ['edit_url', 'owner' ,'id', 'nama_tanaman', 'jenis', 'waktu_tanam_hari', 'harga_perTon', 'peluang_hama', 'related_tanaman']
+        
+        fields = [
+                    'edit_url', 
+                    'owner' ,
+                    'id', 
+                    'nama_tanaman', 
+                    'jenis', 
+                    'waktu_tanam_hari', 
+                    'harga_perTon', 
+                    'peluang_hama', 
+                    'public',
+                    # 'related_tanaman'
+                ]
 
     def get_edit_url(self, obj):
         request = self.context.get('request')
@@ -67,7 +79,19 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Panenan
-        fields = ['id','tanggal_panen', 'tanaman_nama', 'waktu_tanam', 'berat_ton','harga', 'total_harga', 'petani', 'edit_url']
+        fields = [
+            
+            'id',
+            'tanggal_panen', 
+            'tanaman_nama', 
+            'waktu_tanam', 
+            'berat_ton',
+            'harga', 
+            'total_harga',
+            'petani', 
+            'edit_url'
+            
+            ]
         
     def get_total_harga(self, obj):
         # Menghitung total pendapatan

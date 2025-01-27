@@ -54,6 +54,7 @@ class Tanaman(models.Model):
     harga_perTon = models.IntegerField(default=0)
     peluang_hama = models.ForeignKey(Hama, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, related_name='tanaman', on_delete=models.CASCADE)
+    public = models.BooleanField(default=True)
     
     class Meta:
         ordering = ['-harga_perTon']
