@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import UniqueConstraint
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.db.models import Q
 
 User = settings.AUTH_USER_MODEL # 'auth.User'
 
@@ -46,6 +47,34 @@ class Hama(models.Model):
     
     def __str__(self):
         return self.nama_hama
+    
+    
+    
+# for searching Tanaman
+
+class TanamanQuerySet(models.QuerySet):
+    def is_public(self):
+        return self.filter(public=True)
+    
+    def search(self, query, user=None):
+        lookup = Q(nama_tanaman__icontains=query)
+        qs = self.is_public().filter(lookup)
+        
+        if user is not None:
+            qs2 = self.filter(user=user).filter(lookup)
+            qs = (qs | qs2).distinct()
+        
+        return qs
+
+class TanamanManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return TanamanQuerySet(self.model, using=self._db)
+    
+    def search(self, query, user=None):
+        return self.get_queryset().is_public().search(query, user=user)
+
+
+# searching Tanaman
 class Tanaman(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     nama_tanaman = models.CharField(max_length=100, unique=True)
@@ -55,6 +84,8 @@ class Tanaman(models.Model):
     peluang_hama = models.ForeignKey(Hama, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, related_name='tanaman', on_delete=models.CASCADE)
     public = models.BooleanField(default=True)
+    
+    objects = TanamanManager() # can't migerate
     
     class Meta:
         ordering = ['-harga_perTon']

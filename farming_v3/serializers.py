@@ -35,7 +35,7 @@ class TanamanSerializer(serializers.ModelSerializer):
         
         fields = [
                     'edit_url', 
-                    'owner' ,
+                    'owner',
                     'id', 
                     'nama_tanaman', 
                     'jenis', 
