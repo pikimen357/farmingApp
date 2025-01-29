@@ -18,9 +18,9 @@ if auth_response.status_code == 200:
 
     panenan_list = [
     {
-        "hasil_panen": 4,
-        "berat_ton": 29,
-        "tanggal_panen": "2025-01-08 11:45:20"
+        "hasil_panen": 5,
+        "berat_ton": 19,
+        "tanggal_panen": "2024-12-28 11:45:20"
     }
     ]
 

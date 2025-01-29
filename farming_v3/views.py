@@ -69,13 +69,13 @@ class TanamanList(
         serializer.save(owner=self.request.user)
     
 class HamaList(StaffEditorPermissionMixin,
-               UserQuerySetMixin,
+            #    UserQuerySetMixin,
                generics.ListCreateAPIView):
     queryset = Hama.objects.all()
     serializer_class = HamaSerializer
     
 class PupukPestisidaList(StaffEditorPermissionMixin, 
-                         UserQuerySetMixin,
+                        #  UserQuerySetMixin,
                          generics.ListCreateAPIView):
     queryset = PestisidaPupuk.objects.all()
     serializer_class = PestisidaPupukSerializer
@@ -111,7 +111,7 @@ class PanenanDetailView(StaffEditorPermissionMixin,
         return self.get_queryset().get(hasil_panen__nama_tanaman__icontains=hasil_panen)
 
 class PupukPestisidaDetail(StaffEditorPermissionMixin, 
-                            UserQuerySetMixin, 
+                            # UserQuerySetMixin, 
                             generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PestisidaPupukSerializer
     
@@ -120,7 +120,7 @@ class PupukPestisidaDetail(StaffEditorPermissionMixin,
         return PestisidaPupuk.objects.get(nama_obat=nama_obat)
 
 class HamaDetailView( StaffEditorPermissionMixin, 
-                        UserQuerySetMixin, 
+                        # UserQuerySetMixin, 
                         generics.RetrieveUpdateDestroyAPIView):
     serializer_class = HamaSerializer
     
