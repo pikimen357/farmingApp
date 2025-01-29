@@ -61,7 +61,7 @@ class TanamanQuerySet(models.QuerySet):
         qs = self.is_public().filter(lookup)
         
         if user is not None:
-            qs2 = self.filter(user=user).filter(lookup)
+            qs2 = self.filter(owner=user).filter(lookup)
             qs = (qs | qs2).distinct()
         
         return qs
@@ -71,7 +71,7 @@ class TanamanManager(models.Manager):
         return TanamanQuerySet(self.model, using=self._db)
     
     def search(self, query, user=None):
-        return self.get_queryset().is_public().search(query, user=user)
+        return self.get_queryset().is_public().search(query, owner=user)
 
 
 # searching Tanaman

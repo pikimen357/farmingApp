@@ -5,22 +5,27 @@ from django.contrib.auth.models import User
 from farming_v3.serializers import UserSerializer
 from rest_framework.response  import Response
 from farming_v3.permissions import IsOwnerOrReadOnly
-from api.mixins import StaffEditorPermissionMixin
+from api.mixins import StaffEditorPermissionMixin, UserQuerySetMixin
 
 # GENERAL OBJECTS
     
-class UserList(generics.ListAPIView):
+class UserList(StaffEditorPermissionMixin, 
+               UserQuerySetMixin, 
+               generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 #  user cannot add panenan here
-class PanenanDetailList(generics.ListAPIView):
+class PanenanDetailList(StaffEditorPermissionMixin, 
+                        UserQuerySetMixin, 
+                        generics.ListAPIView):
     queryset = Panenan.objects.all()
     serializer_class = PanenanDetailSerializer
    
 
 # user can add panenan here
 class PanenanList(  StaffEditorPermissionMixin,
+                    UserQuerySetMixin,
                     generics.ListCreateAPIView):
     queryset = Panenan.objects.all()
     serializer_class = PanenanSerializer
@@ -52,7 +57,9 @@ class PanenanList(  StaffEditorPermissionMixin,
     # def perform_create(self, serializer):
     #     serializer.save(owner=self.request.user)
     
-class TanamanList(StaffEditorPermissionMixin, 
+class TanamanList(
+                  StaffEditorPermissionMixin, 
+                  UserQuerySetMixin, 
                   generics.ListCreateAPIView):
     queryset = Tanaman.objects.all()
     serializer_class  = TanamanSerializer
@@ -62,22 +69,27 @@ class TanamanList(StaffEditorPermissionMixin,
         serializer.save(owner=self.request.user)
     
 class HamaList(StaffEditorPermissionMixin,
+               UserQuerySetMixin,
                generics.ListCreateAPIView):
     queryset = Hama.objects.all()
     serializer_class = HamaSerializer
     
 class PupukPestisidaList(StaffEditorPermissionMixin, 
+                         UserQuerySetMixin,
                          generics.ListCreateAPIView):
     queryset = PestisidaPupuk.objects.all()
     serializer_class = PestisidaPupukSerializer
 
 class UserDetail(StaffEditorPermissionMixin, 
+                 UserQuerySetMixin,
                  generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
 # can't update panenan, when panenan already exist with same farmer  (must be updated)
-class PanenanDetailView(generics.RetrieveAPIView):
+class PanenanDetailView(StaffEditorPermissionMixin, 
+                        UserQuerySetMixin, 
+                        generics.RetrieveAPIView):
     serializer_class = PanenanDetailSerializer
     lookup_field = 'hasil_panen__nama_tanaman'  # Menggunakan tanaman_nama sebagai path parameter
     
@@ -98,14 +110,18 @@ class PanenanDetailView(generics.RetrieveAPIView):
         hasil_panen = self.kwargs.get(self.lookup_field)  # Ambil tanaman_nama dari URL
         return self.get_queryset().get(hasil_panen__nama_tanaman__icontains=hasil_panen)
 
-class PupukPestisidaDetail(generics.RetrieveUpdateDestroyAPIView):
+class PupukPestisidaDetail(StaffEditorPermissionMixin, 
+                            UserQuerySetMixin, 
+                            generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PestisidaPupukSerializer
     
     def get_object(self):
         nama_obat = self.kwargs['nama_obat']
         return PestisidaPupuk.objects.get(nama_obat=nama_obat)
 
-class HamaDetailView(generics.RetrieveUpdateDestroyAPIView):
+class HamaDetailView( StaffEditorPermissionMixin, 
+                        UserQuerySetMixin, 
+                        generics.RetrieveUpdateDestroyAPIView):
     serializer_class = HamaSerializer
     
     # mengambil data hama berdasarkan namanya
@@ -113,7 +129,9 @@ class HamaDetailView(generics.RetrieveUpdateDestroyAPIView):
         nama_hama = self.kwargs['nama_hama']
         return Hama.objects.get(nama_hama=nama_hama)
     
-class TanamanDetail(generics.RetrieveUpdateDestroyAPIView):
+class TanamanDetail(StaffEditorPermissionMixin, 
+                    UserQuerySetMixin, 
+                    generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TanamanSerializer
     
     
