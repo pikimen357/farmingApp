@@ -101,10 +101,17 @@ class Panenan(models.Model):
     # foreign key merujuk pada id tabel Tanaman
     hasil_panen = models.ForeignKey(Tanaman, on_delete=models.RESTRICT)
     berat_ton = models.IntegerField(default=0)
-    owner = models.ForeignKey(User, related_name='panenan', on_delete=models.RESTRICT)
+    # owner = models.CharField(max_length=100, default=1)  # Simpan owner di database
+    owner = models.ForeignKey(User, related_name='panenan', on_delete=models.RESTRICT, default=1)
 
     def __str__(self):
         return f"{self.hasil_panen.nama_tanaman} - {self.berat_ton} ton"
+   
+
+    # def save(self, *args, **kwargs):
+    #     if not self.owner:  # Jika owner belum diisi, ambil dari hasil_panen
+    #         self.owner = self.hasil_panen.owner
+    #     super().save(*args, **kwargs)
     
     class Meta:
         ordering = ['created']

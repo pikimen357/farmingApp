@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import datetime
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'api',
     'corsheaders',
     'search',
@@ -142,6 +144,7 @@ CORS_ALLOW_ALL_ORIGINS = True  # Sebaiknya hanya diaktifkan untuk pengembangan
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES" : [
         "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
         "api.authentication.TokenAuthentication"    
     ],
     "DEFAULT_PERMISSION_CLASSES" : [
@@ -151,3 +154,8 @@ REST_FRAMEWORK = {
                                 "PAGE_SIZE" : 10
 }
 
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES" : ["Bearer"],
+    "ACCESS_TOKEN_LIFETIME" : datetime.timedelta(seconds=30),
+    "REFRESH_TOKEN_LIFETIME" : datetime.timedelta(minutes=1)
+}
