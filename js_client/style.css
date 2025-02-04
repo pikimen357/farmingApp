@@ -1,0 +1,31 @@
+body {
+    background: url('https://i0.wp.com/konsultanpendidikan.com/wp-content/uploads/2019/06/info-lengkap-jurusan-agriculture-and-related-sciences.jpg?fit=1366%2C768&ssl=1') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+}
+
+h2 {
+    color: #2d6a4f;
+}
+
+.btn-primary {
+    background-color: #2d6a4f;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #1b4332;
+}

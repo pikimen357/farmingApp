@@ -40,17 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'api',
-    'corsheaders',
     'search',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -59,6 +60,15 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mysite.urls'
+CORS_URL_REGEX = r"^/api/.*"
+CORS_ALLOWED_ORIGINS  = []
+
+# allowed cors only in development server when DEBUG=True
+if DEBUG:
+    CORS_ALLOWED_ORIGINS += [
+        'http://127.0.0.1:5500', 
+        'http://127.0.0.1:8111'
+    ]
 
 TEMPLATES = [
     {
@@ -138,7 +148,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOW_ALL_ORIGINS = True  # Sebaiknya hanya diaktifkan untuk pengembangan
+# CORS_ALLOW_ALL_ORIGINS = True  # Sebaiknya hanya diaktifkan untuk pengembangan
 
 # for default authentication & permission in view
 REST_FRAMEWORK = {
