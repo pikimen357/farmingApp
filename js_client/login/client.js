@@ -28,7 +28,13 @@ function handleLogin(event){
         console.log("respon e: ",response)
         return response.json()
     })
-    .then(handleAuthData)
+    .then((data) => {
+            handleAuthData(data);
+
+            if (data) {
+                window.location.href = "http://127.0.0.1:5501/search/index.html";
+            }
+    })
     .catch((error) =>{
         console.log(error);
     })
@@ -41,19 +47,3 @@ function handleAuthData(authData) {
     localStorage.setItem('refresh', authData.refresh);
 }
 
-function getProductList() {
-    const endpoint = `${baseEndpoint}v3/products/`;
-    const options = {
-        method: "GET",
-        headers: {
-            "Content-Type" : "application/json"
-        }
-        
-    }
-
-    fetch(endpoint, options)
-    .then(response=>response.json())
-    .then(data => {
-
-    })
-}
