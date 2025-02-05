@@ -7,7 +7,7 @@ h5{
     text-transform: uppercase;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bolder;
-    color: chocolate;
+    color: rgb(0, 0, 0);
 }
 
 #card  {
@@ -16,8 +16,4 @@ h5{
 
 #edit-btn{
     max-width: 90px;
-}
-
-#search-form{
-    max-width: 800px;
 }

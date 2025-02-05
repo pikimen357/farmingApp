@@ -23,7 +23,8 @@ urlpatterns = [
     path('v3/', include('farming_v3.urls')),
     path('api/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls')),
-    path('v3/search/', include('search.urls'))
+    path('v3/search/', include('search.urls')),
+    # path('log/', include('django.contrib.auth.urls'))
 ]
 
 # Hesoyam1!

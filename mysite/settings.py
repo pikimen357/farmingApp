@@ -41,11 +41,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'api',
     'search',
 ]
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     
@@ -67,7 +74,8 @@ CORS_ALLOWED_ORIGINS  = []
 if DEBUG:
     CORS_ALLOWED_ORIGINS += [
         'http://127.0.0.1:5500', 
-        'http://127.0.0.1:8111'
+        'http://127.0.0.1:5501', 
+        'http://127.0.0.1:8111',
     ]
 
 TEMPLATES = [
@@ -166,6 +174,6 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES" : ["Bearer"],
-    "ACCESS_TOKEN_LIFETIME" : datetime.timedelta(seconds=30),
-    "REFRESH_TOKEN_LIFETIME" : datetime.timedelta(minutes=1)
+    "ACCESS_TOKEN_LIFETIME" : datetime.timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME" : datetime.timedelta(minutes=5)
 }

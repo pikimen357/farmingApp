@@ -7,3 +7,5 @@ djangorestframework-simplejwt
 django-cors-headers
 # postgre db
 psycopg2-binary
+django-crispy-forms
+crispy-bootstrap5

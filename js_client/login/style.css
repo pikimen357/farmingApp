@@ -6,12 +6,21 @@ body {
     align-items: center;
     height: 100vh;
     font-family: 'Arial', sans-serif;
+    padding-top: 60px; /* Tambahkan padding agar konten tidak tertutup header */
+}
+
+.mb-3{
+    font-style: italic;
+}
+
+#loginin{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .login-container {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgb(204, 229, 211);
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 7px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 100%;
     max-width: 400px;
@@ -29,3 +38,12 @@ h2 {
 .btn-primary:hover {
     background-color: #1b4332;
 }
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Supaya tetap di atas elemen lain */
+}
+

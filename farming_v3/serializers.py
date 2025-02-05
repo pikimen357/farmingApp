@@ -42,6 +42,8 @@ class TanamanSerializer(serializers.ModelSerializer):
                     'waktu_tanam_hari', 
                     'harga_perTon', 
                     'peluang_hama', 
+                    'deskripsi',
+                    'link_tanaman',
                     'public',
                     # 'related_tanaman'
                 ]

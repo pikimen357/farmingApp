@@ -13,7 +13,7 @@ function handleLogin(event){
     let loginFormData = new FormData(loginForm);
     let loginObjectData = Object.fromEntries(loginFormData);
     let bodyStr = JSON.stringify(loginObjectData)
-    console.log(loginObjectData, bodyStr);
+    // console.log(bodyStr);
 
     const options = {
         method: "POST",
@@ -26,14 +26,17 @@ function handleLogin(event){
     fetch(loginEndpoint, options)
     .then((response) => {
         console.log("respon e: ",response)
+        if (response.ok){
+            alert(`Login successful`);
+        }
         return response.json()
     })
     .then((data) => {
             handleAuthData(data);
 
-            if (data) {
-                window.location.href = "http://127.0.0.1:5501/search/index.html";
-            }
+            // if (data) {
+            //     window.location.href = "http://127.0.0.1:5501/search/index.html";
+            // }
     })
     .catch((error) =>{
         console.log(error);

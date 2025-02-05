@@ -1,10 +1,6 @@
-const searchForm = document.getElementById('search-form');
+
 const contentContainer = document.getElementById('content-container');
 const baseEndpoint = "http://localhost:8000/v3";
-
-if (searchForm) {
-    searchForm.addEventListener('submit',  handleSearch);
-}
 
 function isTokenNotValid(jsonData) {
     if(jsonData.code && jsonData.code === 'token_not_valid'){
@@ -17,15 +13,16 @@ function isTokenNotValid(jsonData) {
     return true;
 }
 
-function handleSearch(event){
-    event.preventDefault();
+function formatTanggal(dateString) {
+    let date = new Date(dateString);  // Konversi string ke objek Date
 
-    let formData = new FormData(searchForm);
-    let data = Object.fromEntries(formData);
-    let searchParams = new URLSearchParams(data);
+    let options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return new Intl.DateTimeFormat('id-ID', options).format(date);
+}
 
 
-    const endpoint = `${baseEndpoint}/search/?${searchParams}`;
+
+    const endpoint = `${baseEndpoint}/panenan/`;
 
     // get access token from local(chaching)
     const authToken = localStorage.getItem('access');
@@ -54,14 +51,12 @@ function handleSearch(event){
                 htmlStr +=  `
                 <div class="card mb-3 shadow-sm" id="card">
                     <div class="card-body">
-                        <h5 class="card-title">${result.nama_tanaman}</h5>
-                        <p class="card-text"><strong>Jenis:</strong> ${result.jenis}</p>
-                        <p class="card-text"><strong>Harga /ton:</strong> Rp${result.harga_perTon.toLocaleString("id-ID")}</p>
-                        <p class="card-text"><strong>Waktu Tanam:</strong> ${result.waktu_tanam_hari} hari</p>
-                        <p class="card-text"><strong>Deskripsi:</strong> ${result.deskripsi}.</p>
-                        <img src="${result.link_tanaman}" class="card-img-top img-fluid mx-auto d-block mt-3" 
-                            alt="${result.nama_tanaman}" style="width: 220px; height:180px; object-fit: cover;">
-                        <a href="${result.edit_url}" id="edit-btn" class="btn btn-primary w-100">Edit</a>
+                        <h5 class="card-title">${result.tanaman_nama}</h5>
+                        <p class="card-text"><strong>Tanggal:</strong> ${formatTanggal(result.tanggal_panen)}</p>
+                        <p class="card-text"><strong>Berat:</strong> ${result.berat_ton} ton</p>
+                        <p class="card-text"><strong>Total Pendapatan:</strong> Rp${result.total_harga.toLocaleString("id-ID")}</p>
+                        <p class="card-text"><strong>Waktu Tanam:</strong> ${result.waktu_tanam} hari</p>
+                        <p class="card-text"><strong>Pemanen:</strong> ${result.petani}</p>
                         <br>
                     </div>
                     
@@ -72,14 +67,14 @@ function handleSearch(event){
             }
             contentContainer.innerHTML = htmlStr
             if (data.results.length === 0){
-                contentContainer.innerHTML = "<p>Mboten Wonten Tanduran</p>"
+                contentContainer.innerHTML = "<p>Tidak Ada  Panenan</p>"
             }
         } else {
-            contentContainer.innerHTML = "<p>Mboten Wonten Tanduran</p>"
+            contentContainer.innerHTML = "<p>Tidak Ada Panenan</p>"
         }
     })
     .catch((error) =>{
         console.log(error);
     })
 
-}
+
