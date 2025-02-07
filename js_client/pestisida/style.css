@@ -1,0 +1,23 @@
+#content-container{
+    max-width: 500px;
+}  
+
+
+h5{
+    text-transform: uppercase;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+    color: chocolate;
+}
+
+#card  {
+    background-color: rgb(229, 229, 229);
+}
+
+#edit-btn{
+    max-width: 90px;
+}
+
+#search-form{
+    max-width: 800px;
+}

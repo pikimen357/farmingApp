@@ -1,6 +1,10 @@
-
+const searchForm = document.getElementById('search-form');
 const contentContainer = document.getElementById('content-container');
 const baseEndpoint = "http://localhost:8000/v3";
+
+if (searchForm) {
+    searchForm.addEventListener('submit',  handleSearch);
+}
 
 function isTokenNotValid(jsonData) {
     if(jsonData.code && jsonData.code === 'token_not_valid'){
@@ -13,14 +17,12 @@ function isTokenNotValid(jsonData) {
     return true;
 }
 
-function formatTanggal(dateString) {
-    let date = new Date(dateString);  // Konversi string ke objek Date
+function handleSearch(event){
+    event.preventDefault();
 
-    let options = { day: 'numeric', month: 'long', year: 'numeric' };
-    return new Intl.DateTimeFormat('id-ID', options).format(date);
-}
+    const cari = document.getElementById('cari').value;
 
-    const endpoint = `${baseEndpoint}/panenan/`;
+    const endpoint = `${baseEndpoint}/pestisida-pupuk/${cari}`;
 
     // get access token from local(chaching)
     const authToken = localStorage.getItem('access');
@@ -39,40 +41,34 @@ function formatTanggal(dateString) {
         return response.json()
     })
     .then(data => {
-        console.log(data.results);
+        console.log('hasil : ',data);
         const isValidData = isTokenNotValid(data);
 
-        if (isValidData && data.results){
+        if (isValidData && data){
             let htmlStr = "";
-            for (let result of data.results){   
-                
                 htmlStr +=  `
                 <div class="card mb-3 shadow-sm" id="card">
                     <div class="card-body">
-                        <h5 class="card-title">${result.tanaman_nama}</h5>
-                        <p class="card-text"><strong>Tanggal:</strong> ${formatTanggal(result.tanggal_panen)}</p>
-                        <p class="card-text"><strong>Berat:</strong> ${result.berat_ton} ton</p>
-                        <p class="card-text"><strong>Total Pendapatan:</strong> Rp${result.total_harga.toLocaleString("id-ID")}</p>
-                        <p class="card-text"><strong>Waktu Tanam:</strong> ${result.waktu_tanam} hari</p>
-                        <p class="card-text"><strong>Pemanen:</strong> ${result.petani}</p>
+                        <h5 class="card-title">${data.nama_obat}</h5>
+                        <p class="card-text"><strong>Jenis      :</strong> ${data.jenis}</p>
+                        <p class="card-text"><strong>Produsen   :</strong> ${data.produsen}</p>
+                        <p class="card-text"><strong>Warna      :</strong> ${data.warna}</p>
                         <br>
                     </div>
-                    
-                    
                 </div>
             `;
 
-            }
+            
             contentContainer.innerHTML = htmlStr
-            if (data.results.length === 0){
-                contentContainer.innerHTML = "<p>Tidak Ada  Panenan</p>"
+            if (data.length === 0){
+                contentContainer.innerHTML = "<p>Pestisida doesn't exist</p>"
             }
         } else {
-            contentContainer.innerHTML = "<p>Tidak Ada Panenan</p>"
+            contentContainer.innerHTML = "<p>Pestisida doesn't exist</p>"
         }
     })
     .catch((error) =>{
         console.log(error);
     })
 
-
+}

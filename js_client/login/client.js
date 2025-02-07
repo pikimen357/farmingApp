@@ -12,8 +12,8 @@ function handleLogin(event){
 
     let loginFormData = new FormData(loginForm);
     let loginObjectData = Object.fromEntries(loginFormData);
-    let bodyStr = JSON.stringify(loginObjectData)
-    // console.log(bodyStr);
+    let bodyStr = JSON.stringify(loginObjectData);
+    // console.log("bodystr : ",bodyStr);
 
     const options = {
         method: "POST",
