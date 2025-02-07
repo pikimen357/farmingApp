@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from api.serializers import UserPublicSerializer
 from rest_framework.reverse import reverse
 
-
         
 class PanenanSerializer(serializers.ModelSerializer):
     tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S')
@@ -54,17 +53,18 @@ class TanamanSerializer(serializers.ModelSerializer):
         if request is None:
             return None
         
+        
         return reverse('tanaman-edit', kwargs={'nama_tanaman' : obj.nama_tanaman}, request=request)
     
 class PestisidaPupukSerializer(serializers.ModelSerializer):
     class Meta:
         model = PestisidaPupuk
-        fields = ['id', 'jenis', 'nama_obat', 'produsen', 'warna']
+        fields = ['id', 'jenis', 'nama_obat', 'produsen', 'warna', 'deskripsi']
         
 class HamaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hama
-        fields = ['id', 'nama_hama', 'rate_bahaya', 'makhluk', 'obat']
+        fields = ['id', 'nama_hama', 'rate_bahaya', 'makhluk', 'obat', 'deskripsi']
 
 
 # Serializer for table relation panenan --> tanaman, panenan --> petani 
@@ -91,6 +91,7 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
             'harga', 
             'total_harga',
             'petani', 
+            'deskripsi',
             'edit_url'
             
             ]
@@ -106,7 +107,12 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
         if request is None:
             return None
         
-        return reverse('panenan-detail', kwargs={'hasil_panen__nama_tanaman' : obj.hasil_panen.nama_tanaman}, request=request)
+        url_reverse = f"{reverse(
+            'panenan-detail', 
+            kwargs={'hasil_panen__nama_tanaman' : obj.hasil_panen.nama_tanaman}, 
+            request=request)}?petani_nama={obj.owner.username}"
+        
+        return url_reverse
 
 # Serializer for table relation panenan -->- tanaman
 class HamaDetailSerializer(serializers.ModelSerializer):

@@ -22,6 +22,7 @@ class PestisidaPupuk(models.Model):
     nama_obat = models.CharField(max_length=100, unique=True)
     produsen = models.CharField(max_length=100)
     warna = models.TextField(max_length=10, choices=Warna.choices)
+    deskripsi = models.TextField(default="Deskripsi Obat")
    
     class Meta:
         ordering = ['created']
@@ -40,6 +41,7 @@ class Hama(models.Model):
     rate_bahaya = models.IntegerField(default=0)
     obat = models.ForeignKey(PestisidaPupuk, on_delete=models.RESTRICT)
     makhluk =models.CharField(max_length=20, choices=Makhluk.choices)
+    deskripsi = models.TextField(default="Deskripsi Hama")
     
     class Meta:
         ordering = ['-rate_bahaya']
@@ -105,9 +107,10 @@ class Panenan(models.Model):
     berat_ton = models.IntegerField(default=0)
     # owner = models.CharField(max_length=100, default=1)  # Simpan owner di database
     owner = models.ForeignKey(User, related_name='panenan', on_delete=models.RESTRICT, default=1)
+    deskripsi = models.TextField(default="Deskripsi Panenan")
 
     def __str__(self):
-        return f"{self.hasil_panen.nama_tanaman} - {self.berat_ton} ton"
+        return f"{self.hasil_panen.nama_tanaman} - {self.owner.username} - {self.berat_ton} ton"
    
 
     # def save(self, *args, **kwargs):
