@@ -1,10 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from farming_v3 import views
 
 urlpatterns = [
-    
-    
+    path('signup/', views.authView, name="authView"),
+    path("accounts/", include("django.contrib.auth.urls")),
+
     path('users/', views.UserList.as_view()),
     path('user/<int:pk>/', views.UserDetail.as_view()),
     

@@ -56,6 +56,16 @@ class TanamanSerializer(serializers.ModelSerializer):
         
         return reverse('tanaman-edit', kwargs={'nama_tanaman' : obj.nama_tanaman}, request=request)
     
+    def to_internal_value(self, data):
+        
+        # ensure certain fields are converted to integer
+        data["owner"] = int(data["owner"]) if "owner" in data else None
+        data["waktu_tanam_hari"] = int(data["waktu_tanam_hari"]) if "waktu_tanam_hari" in data else None
+        data["harga_perTon"] = int(data["harga_perTon"]) if "harga_perTon" in data else None
+        data["peluang_hama"] = int(data["peluang_hama"]) if "peluang_hama" in data else None
+        
+        return super().to_internal_value(data)
+    
 class PestisidaPupukSerializer(serializers.ModelSerializer):
     class Meta:
         model = PestisidaPupuk

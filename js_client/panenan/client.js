@@ -20,20 +20,20 @@ function formatTanggal(dateString) {
     return new Intl.DateTimeFormat('id-ID', options).format(date);
 }
 
-    const endpoint = `${baseEndpoint}/panenan/`;
+const endpoint = `${baseEndpoint}/panenan/`;
 
-    // get access token from local(chaching)
-    const authToken = localStorage.getItem('access');
+ // get access token from local(chaching)
+const authToken = localStorage.getItem('access');
 
-    const options = {
+const options = {
         method: "GET",
         headers: {
             "Content-Type" : "application/json",
             "Authorization" : `Bearer ${authToken}`
         }
-    }
+};
 
-    fetch(endpoint, options)
+fetch(endpoint, options)
     .then((response) => {
         console.log("respon e: ",response)
         return response.json()
@@ -73,6 +73,6 @@ function formatTanggal(dateString) {
     })
     .catch((error) =>{
         console.log(error);
-    })
+});
 
 

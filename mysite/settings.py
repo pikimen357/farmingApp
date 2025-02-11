@@ -73,15 +73,14 @@ CORS_ALLOWED_ORIGINS  = []
 # allowed cors only in development server when DEBUG=True
 if DEBUG:
     CORS_ALLOWED_ORIGINS += [
-        'http://127.0.0.1:5500', 
-        'http://127.0.0.1:5501', 
-        'http://127.0.0.1:8111',
+        'http://127.0.0.1:5501',
+        'http://127.0.0.1:8000',
     ]
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -177,3 +176,6 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME" : datetime.timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME" : datetime.timedelta(minutes=5)
 }
+
+# LOGIN_REDIRECT_URL = "farming_v3:home"
+LOGOUT_REDIRECT_URL = "farming:login"

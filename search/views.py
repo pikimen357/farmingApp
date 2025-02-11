@@ -3,7 +3,9 @@ from rest_framework import generics
 from farming_v3.models import  Tanaman
 from farming_v3.serializers import TanamanSerializer
 
-class SearchTanmanListView(generics.ListAPIView):
+from api.mixins import UserQuerySetMixin
+
+class SearchTanmanListView(generics.ListAPIView, UserQuerySetMixin):
     queryset = Tanaman.objects.all()
     serializer_class = TanamanSerializer
     

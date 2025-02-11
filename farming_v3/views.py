@@ -6,11 +6,12 @@ from farming_v3.serializers import UserSerializer
 from rest_framework.response  import Response
 from farming_v3.permissions import IsOwnerOrReadOnly
 from api.mixins import StaffEditorPermissionMixin, UserQuerySetMixin
+from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm
 
 # GENERAL OBJECTS
     
 class UserList(StaffEditorPermissionMixin, 
-               UserQuerySetMixin, 
                generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -81,7 +82,6 @@ class PupukPestisidaList(StaffEditorPermissionMixin,
     serializer_class = PestisidaPupukSerializer
 
 class UserDetail(StaffEditorPermissionMixin, 
-                 UserQuerySetMixin,
                  generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -138,3 +138,12 @@ class TanamanDetail(StaffEditorPermissionMixin,
     def get_object(self):
         nama_tanaman = self.kwargs['nama_tanaman']
         return Tanaman.objects.get(nama_tanaman=nama_tanaman)
+    
+def authView(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/signup.html", {"form" : form})
