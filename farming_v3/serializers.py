@@ -10,9 +10,7 @@ class PanenanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Panenan
         owner = UserPublicSerializer(source='user', read_only=True)
-        fields = ['id', 'hasil_panen', 'berat_ton', 'tanggal_panen']
-
-
+        fields = ['id', 'hasil_panen', 'berat_ton', 'tanggal_panen', 'deskripsi']
 
 class TanamanSerializer(serializers.ModelSerializer):
     
