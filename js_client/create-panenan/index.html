@@ -16,9 +16,15 @@
     <div class="container mt-5">
         <h2>Panenan</h2>
         <form id="panenanForm">
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label for="hasil_panen" class="form-label">Tanaman Hasil Panen</label>
                 <input type="number" class="form-control" id="hasil_panen" name="hasil_panen" required>
+            </div> -->
+            <div class="mb-3">
+                <label for="hasil_panen" class="form-label">Hasil Panen</label>
+                <input class="form-control" list="tanaman-list" id="hasil_panen" name="hasil_panen" placeholder="Masukan Angka Id" />
+                <datalist id="tanaman-list">
+                </datalist>
             </div>
             <div class="mb-3">
                 <label for="berat_ton" class="form-label">Berat Ton</label>
