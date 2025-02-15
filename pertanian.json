@@ -290,30 +290,33 @@
                                     "hasil_panen",
                                     "berat_ton",
                                     "tanggal_panen"
-                                ],
-                                "examples" : {
-                                    "ubi" : {
-                                        "description" : "Example create panenan ubi",
-                                        "value" : {
-                                            "hasil_panen" : 5,
-                                            "berat_ton" : 132,
-                                            "tanggal_panen" : "2025-01-28",
-                                            "deskripsi" : "panenan yang cukup melimpah"
-                                        }
-                                    },
-                                    "padi" : {
-                                        "description" : "Example create panenan padi",
-                                        "value" : {
-                                            "hasil_panen" : 1,
-                                            "berat_ton" : 22,
-                                            "tanggal_panen" : "2025-02-01",
-                                            "deskripsi" : "panenan yang cukup sedikit"
-                                        }
+                                ]
+                            },
+                            "examples" : {
+                                "ubi" : {
+                                    "description" : "Example create panenan ubi",
+                                    "value" : {
+                                        "hasil_panen" : 5,
+                                        "berat_ton" : 132,
+                                        "tanggal_panen" : "2025-01-28",
+                                        "deskripsi" : "panenan yang cukup melimpah"
+                                    }
+                                },
+                                "padi" : {
+                                    "description" : "Example create panenan padi",
+                                    "value" : {
+                                        "hasil_panen" : 1,
+                                        "berat_ton" : 22,
+                                        "tanggal_panen" : "2025-02-01",
+                                        "deskripsi" : "panenan yang cukup sedikit"
                                     }
                                 }
                             }
                         }
                     }
+                },
+                "responses" : {
+                    
                 }
             }
         }
