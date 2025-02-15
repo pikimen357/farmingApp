@@ -55,7 +55,6 @@ function handleSearch(event){
                 <div class="card mb-3 shadow-sm" id="card">
                     <div class="card-body">
                         <h5 class="card-title">${result.nama_tanaman}</h5>
-                        <p class="card-text"><strong>Owner:</strong> ${result.owner}</p>
                         <p class="card-text"><strong>Jenis:</strong> ${result.jenis}</p>
                         <p class="card-text"><strong>Harga /ton:</strong> Rp${result.harga_perTon.toLocaleString("id-ID")}</p>
                         <p class="card-text"><strong>Waktu Tanam:</strong> ${result.waktu_tanam_hari} hari</p>

@@ -31,7 +31,6 @@ const options = {
     return response.json();
 })
 .then((data) => {
-    console.log(data.results);
     const isValidData = isTokenNotValid(data);
 
     if (isValidData && data.results){
@@ -39,7 +38,7 @@ const options = {
         for (let result of data.results){   
             console.log(result);
             htmlStr +=  `
-                <option value="${result.id}">${result.nama_tanaman}</option>
+                <option value=${result.id}>${result.nama_tanaman}</option>
         `;
         }
         dataTanaman.innerHTML = htmlStr
@@ -52,13 +51,17 @@ const options = {
     }
 
 })
-.catch(error => alert('Terjadi kesalahan: ' + error));
+.catch(error => {
+    console.log('Terjadi kesalahan: ' + error);
+    dataTanaman.innerHTML = '<option value="Tidak ada tanaman"></option>'
+});
 
 
 
  panenanForm.addEventListener('submit', function(event) {
     event.preventDefault();
 
+    // make sure there is name=“{json data attribute}” in the html input ===>> FormData
     let panenanFormData = new FormData(panenanForm);
     let panenanObjectData = Object.fromEntries(panenanFormData);
     let bodyStr = JSON.stringify(panenanObjectData);
@@ -76,16 +79,18 @@ const options = {
     .then(response => response.json())
     .then(data => {
         const isValid = isTokenNotValid(data);
-        if (isValid) {
+        if (isValid && data.results) {
                 alert('Data berhasil dikirim!');
                 console.log('Response:', data);
                 // Redirect ke halaman sukses atau reset form
                 document.getElementById('tanamanForm').reset();
         } 
-        else {
-            alert('Gagal mengirim data: ' + (data.message || 'Unknown error'));
-            console.error('Error response:', data);
-        }
+        // else {
+        //     alert('Gagal mengirim data: ' + (data.message || 'Unknown error'));
+        //     console.error('Error response:', data);
+        // }
     })
-    .catch(error => alert('Terjadi kesalahan: ' + error));
+    .catch(error => {
+        alert('Terjadi kesalahan: ' + error)
+    });
 });

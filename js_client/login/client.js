@@ -28,6 +28,8 @@ function handleLogin(event){
         console.log("respon e: ",response)
         if (response.ok){
             alert(`Login successful`);
+        } else {
+            alert('login gagal');
         }
         return response.json()
     })

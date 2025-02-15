@@ -1,0 +1,329 @@
+{
+    "openapi" : "3.0.3",
+    "info" : {
+        "title" : "Farming RESTful API",
+        "description" : "OpenAPI for Farming RESTful API",
+        "version" : "3",
+        "contact" : {
+            "name" : "Vidky Adhi Pradana",
+            "email" : "vickypradana1111@gmail.com",
+            "url" : ""
+        },
+        "license" : {
+            "name" : "APACHE 2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "servers" : [
+        {
+            "url" : "http://localhost:8000/v3"
+        }
+    ],
+    "paths" : {
+        "/tanaman" : {
+            "get" : {
+                "summary" : "Get all tanaman",
+                "description" : "Get all public tanaman by default",
+                "responses" : {
+
+                }
+            },
+            "post" : {
+                "summary" : "create new tanaman",
+                "description" : "create new tanaman with detail to database",
+                "requestBody" : {
+                    "required" : true,
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nama_tanaman" : {
+                                        "description": "nama_tanaman must be unique",
+                                        "type" : "string",
+                                        "minLength" : 1,
+                                        "maxLength" : 100
+                                    },
+                                    "jenis" : {
+                                        "type" : "string",
+                                        "minLength" : 1,
+                                        "maxLength" : 100
+                                    },
+                                    "waktu_tanam_hari" : {
+                                        "type" : "number",
+                                        "minimum" : 1,
+                                        "maximum" : 2147483647                                       
+                                    },
+                                    "harga_perTon" : {
+                                        "type" : "number",
+                                        "minimum" : 1,
+                                        "maximum" : 2147483647
+                                    },
+                                    "peluang_hama" : {
+                                        "type" : "number",
+                                        "description" : "get Id hama from /hama"
+                                    }, 
+                                    "public" : {
+                                        "type" : "boolean",
+                                        "default" : true
+                                    }
+                                },
+                                "required" : [  "nama_tanaman",
+                                                "jenis", 
+                                                "waktu_tanam_hari",
+                                                "harga_perTon",
+                                                "peluang_hama",
+                                                "public"
+                                ]
+                            },
+                            "examples" : {
+                                "jeruk" : {
+                                    "description" : "example create tanaman jeruk",
+                                    "value" : {
+                                        "nama_tanaman" : "jeruk",
+                                        "jenis" : "pohon",
+                                        "waktu_tanam_hari" : 419,
+                                        "harga_perTon" : 2000000000,
+                                        "peluang_hama" : 2,
+                                        "public" : true
+                                    }
+                                },
+                                "alpukat" : {
+                                    "description" : "example create tanaman alpukat",
+                                    "value" : {
+                                        "nama_tanaman" : "alpukat",
+                                        "jenis" : "pohon",
+                                        "waktu_tanam_hari" : 378,
+                                        "harga_perTon" : 10300590000,
+                                        "peluang_hama" : 5,
+                                        "public" : true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses" : {}
+            }
+        },
+        "/tanaman/{nama_tanaman}" : {
+            "get" :{
+                "summary" : "Get detail tanaman",
+                "description" : "Get detail tanaman by default",
+                "parameters" : [
+                    {
+                        "name" : "nama_tanaman",
+                        "in" : "path",
+                        "required" : true,
+                        "description" : "tanaman for updated",
+                        "schema" : {
+                            "type" : "string",
+                            "minLength" : 1,
+                            "maxLength" : 100
+                        }
+                    }
+                ],
+                "responses" : {
+
+                }
+
+            },             
+            "put": {
+                "summary" : "Update existing tanaman",
+                "description" : "update existing tanaman in database",
+                "parameters" : [
+                    {
+                        "name" : "nama_tanaman",
+                        "in" : "path",
+                        "required" : true,
+                        "description" : "tanaman for updated",
+                        "schema" : {
+                            "type" : "string",
+                            "minLength" : 1,
+                            "maxLength" : 100
+                        },
+                        "examples" : {
+                            "jeruk" : {
+                                "description" : "Sample todolist id for jeruk",
+                                "value" : "jeruk"
+                            },
+                            "alpukat" : {
+                                "description" : "Sample todolist id for jeruk",
+                                "value" : "alpukat"
+                            }
+                        }
+                    }
+                ],
+                "requestBody" : {
+                    "required" : true,
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nama_tanaman" : {
+                                        "description": "nama_tanaman must be unique",
+                                        "type" : "string",
+                                        "minLength" : 1,
+                                        "maxLength" : 100
+                                    },
+                                    "jenis" : {
+                                        "type" : "string",
+                                        "minLength" : 1,
+                                        "maxLength" : 100
+                                    },
+                                    "waktu_tanam_hari" : {
+                                        "type" : "number",
+                                        "minimum" : 1,
+                                        "maximum" : 2147483647                                       
+                                    },
+                                    "harga_perTon" : {
+                                        "type" : "number",
+                                        "minimum" : 1,
+                                        "maximum" : 2147483647
+                                    },
+                                    "peluang_hama" : {
+                                        "type" : "number",
+                                        "description" : "get Id hama from /hama"
+                                    }, 
+                                    "public" : {
+                                        "type" : "boolean",
+                                        "default" : true
+                                    }
+                                },
+                                "required" : [  "nama_tanaman",
+                                                "jenis", 
+                                                "waktu_tanam_hari",
+                                                "harga_perTon",
+                                                "peluang_hama",
+                                                "public"
+                                ]
+                            },
+                            "examples" : {
+                                "jeruk" : {
+                                    "description" : "example create tanaman jeruk",
+                                    "value" : {
+                                        "nama_tanaman" : "jeruk",
+                                        "jenis" : "pohon",
+                                        "waktu_tanam_hari" : 419,
+                                        "harga_perTon" : 2000000000,
+                                        "peluang_hama" : 2,
+                                        "public" : true
+                                    }
+                                },
+                                "alpukat" : {
+                                    "description" : "example create tanaman alpukat",
+                                    "value" : {
+                                        "nama_tanaman" : "alpukat",
+                                        "jenis" : "pohon",
+                                        "waktu_tanam_hari" : 378,
+                                        "harga_perTon" : 10300590000,
+                                        "peluang_hama" : 5,
+                                        "public" : true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses" : {
+
+                }
+                
+            },
+            "delete" : {
+                "summary" : "Delete existing tanaman",
+                "description" : "Delete existing todolist in database",
+                "parameters" : [
+                    {
+                        "name" : "nama_tanaman",
+                        "in" : "path",
+                        "required" : true,
+                        "description"  : "Tanaman for delete",
+                        "schema" : {
+                            "type" : "string"
+                        }
+                    }
+
+                ],
+                "responses" : {
+
+                }
+            }
+        },
+        "/panenan-create" : {
+            "post" : {
+                "summary" : "create new panenan",
+                "description" : "create new tanaman to database",
+                "requestBody" : {
+                    "required" : true,
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "hasil_panen" : {
+                                        "type" : "number",
+                                        "description"  : "get /tanaman id, but show the tanaman_nama!"
+                                    },
+                                    "berat_ton" : {
+                                        "type" : "number",
+                                        "format" : "float",
+                                        "maximum" :2147483647,
+                                        "description" : "weight panenan in Ton"
+                                    },
+                                    "tanggal_panen" : {
+                                        "type" : "string",
+                                        "description" : "get input from date!",
+                                        "default" : "{current time}"
+                                    },
+                                    "deskripsi" : {
+                                        "type" : "string",
+                                        "description" : "write description here"
+                                    },
+                                    "owner" :  {
+                                        "type" : "number",
+                                        "description" :  "auto generated form authentication,please don't create itself!"
+                                    }
+                                },
+                                "required" : [
+                                    "hasil_panen",
+                                    "berat_ton",
+                                    "tanggal_panen"
+                                ],
+                                "examples" : {
+                                    "ubi" : {
+                                        "description" : "Example create panenan ubi",
+                                        "value" : {
+                                            "hasil_panen" : 5,
+                                            "berat_ton" : 132,
+                                            "tanggal_panen" : "2025-01-28",
+                                            "deskripsi" : "panenan yang cukup melimpah"
+                                        }
+                                    },
+                                    "padi" : {
+                                        "description" : "Example create panenan padi",
+                                        "value" : {
+                                            "hasil_panen" : 1,
+                                            "berat_ton" : 22,
+                                            "tanggal_panen" : "2025-02-01",
+                                            "deskripsi" : "panenan yang cukup sedikit"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        ,
+        "/hama" : {
+            "get" : {
+                "summary" : "get all hama",
+                "description" : "get all detail hama",
+                "responses" : {}
+            }
+        }
+    }       
+}

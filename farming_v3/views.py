@@ -25,9 +25,11 @@ class PanenanDetailList(StaffEditorPermissionMixin,
    
 
 # user can add panenan here
-class PanenanList(  StaffEditorPermissionMixin,
+class PanenanList(  
+                    StaffEditorPermissionMixin,
                     UserQuerySetMixin,
-                    generics.ListCreateAPIView):
+                    generics.ListCreateAPIView
+                ):
     queryset = Panenan.objects.all()
     serializer_class = PanenanSerializer
     permission_classes = [permissions.DjangoModelPermissions]
