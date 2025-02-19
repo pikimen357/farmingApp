@@ -84,7 +84,7 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
     total_harga = serializers.SerializerMethodField(read_only=True)
     petani = serializers.ReadOnlyField(source='owner.username', read_only=True)
     
-    edit_url = serializers.SerializerMethodField(read_only=True)
+    # edit_url = serializers.SerializerMethodField(read_only=True)
     
 
     class Meta:
@@ -100,7 +100,7 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
             'total_harga',
             'petani', 
             'deskripsi',
-            'edit_url'
+            # 'edit_url'
             
             ]
         
@@ -108,19 +108,19 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
         # Menghitung total pendapatan
         return obj.berat_ton * obj.hasil_panen.harga_perTon
     
-    def get_edit_url(self, obj):
+    # def get_edit_url(self, obj):
         
-        request = self.context.get('request') #self.request if in views.py
+    #     request = self.context.get('request') #self.request if in views.py
 
-        if request is None:
-            return None
+    #     if request is None:
+    #         return None
         
-        url_reverse = f"{reverse(
-            'panenan-detail', 
-            kwargs={'hasil_panen__nama_tanaman' : obj.hasil_panen.nama_tanaman}, 
-            request=request)}?petani_nama={obj.owner.username}"
+    #     url_reverse = f"{reverse(
+    #         'panenan-detail', 
+    #         kwargs={'hasil_panen__nama_tanaman' : obj.hasil_panen.nama_tanaman}, 
+    #         request=request)}?petani_nama={obj.owner.username}"
         
-        return url_reverse
+    #     return url_reverse
 
 # Serializer for table relation panenan -->- tanaman
 class HamaDetailSerializer(serializers.ModelSerializer):
