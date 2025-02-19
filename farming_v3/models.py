@@ -19,7 +19,7 @@ class PestisidaPupuk(models.Model):
     
     created = models.DateTimeField(auto_now_add=True)
     jenis = models.TextField(max_length=10, choices=Jenis.choices)
-    nama_obat = models.CharField(max_length=100, unique=True)
+    nama_obat = models.CharField(max_length=100, unique=True, db_index=True)
     produsen = models.CharField(max_length=100)
     warna = models.TextField(max_length=10, choices=Warna.choices)
     deskripsi = models.TextField(default="Deskripsi Obat")
@@ -37,7 +37,7 @@ class Hama(models.Model):
         HEWAN = "HEWAN"
     
     created = models.DateTimeField(auto_now_add=True)
-    nama_hama = models.CharField(max_length=100, unique=True)
+    nama_hama = models.CharField(max_length=100, unique=True, db_index=True)
     rate_bahaya = models.IntegerField(default=0)
     obat = models.ForeignKey(PestisidaPupuk, on_delete=models.RESTRICT)
     makhluk =models.CharField(max_length=20, choices=Makhluk.choices)
@@ -79,7 +79,7 @@ class TanamanManager(models.Manager):
 # searching Tanaman
 class Tanaman(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    nama_tanaman = models.CharField(max_length=100, unique=True)
+    nama_tanaman = models.CharField(max_length=100, unique=True, db_index=True)
     jenis = models.CharField(max_length=100)
     waktu_tanam_hari = models.IntegerField(default=0)
     harga_perTon = models.IntegerField(default=0)
@@ -104,7 +104,7 @@ class Panenan(models.Model):
     
     # foreign key merujuk pada id tabel Tanaman
     hasil_panen = models.ForeignKey(Tanaman, on_delete=models.RESTRICT)
-    berat_ton = models.IntegerField(default=0)
+    berat_ton = models.BigIntegerField(default=0)
     owner = models.ForeignKey(User, related_name='panenan', on_delete=models.RESTRICT, default=1)
     deskripsi = models.TextField()
 
