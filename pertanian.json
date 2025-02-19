@@ -22,6 +22,11 @@
     "paths" : {
         "/tanaman" : {
             "get" : {
+                "security" : [
+                    {
+                        "bearerAuth" : []
+                    }
+                ],
                 "tags" : ["Tanaman"],
                 "summary" : "Get all tanaman",
                 "description" : "Get all public tanaman by default",
@@ -70,6 +75,11 @@
             }
         },
         "post" : {
+            "security" : [
+                    {
+                        "bearerAuth" : []
+                    }
+                ],
             "tags" : ["Tanaman"],
             "summary" : "create new tanaman",
             "description" : "create new tanaman with detail to database",
@@ -131,6 +141,11 @@
     },
      "/tanaman/{nama_tanaman}" : {
             "get" :{
+                "security" : [
+                    {
+                        "bearerAuth" : []
+                    }
+                ],
                 "tags" : ["Tanaman"],
                 "summary" : "Get detail tanaman",
                 "description" : "Get detail tanaman by default",
@@ -154,6 +169,11 @@
 
             },             
             "put": {
+                "security" : [
+                    {
+                        "bearerAuth" : []
+                    }
+                ],
                 "tags" : ["Tanaman"],
                 "summary" : "Update existing tanaman",
                 "description" : "update existing tanaman in database",
@@ -204,6 +224,11 @@
                 
             },
             "delete" : {
+                "security" : [
+                    {
+                        "bearerAuth" : []
+                    }
+                ],
                 "tags" : ["Tanaman"],
                 "summary" : "Delete existing tanaman",
                 "description" : "Delete existing todolist in database",
@@ -313,6 +338,11 @@
     },
     "/panenan-create" : {
         "post" : {
+                "security" : [
+                    {
+                        "bearerAuth" : []
+                    }
+                ],
                 "tags" : ["Panenan"],
                 "summary" : "create new panenan",
                 "description" : "create new tanaman to database",
@@ -367,6 +397,11 @@
         },
         "/panenan" : {
             "get" :  {
+                "security" : [
+                    {
+                        "bearerAuth" : []
+                    }
+                ],
                 "tags" : ["Panenan"],
                 "summary" : "Get all panenan",
                 "description" : "get all panenan that related to auth user",
@@ -467,6 +502,11 @@
         },
         "/panenan/{nama_tanaman}" : {
             "get" : {
+                "security" : [
+                    {
+                        "bearerAuth" : []
+                    }
+                ],
                 "tags" : ["Panenan"],
                 "summary" : "Get panenan detail",
                 "description" : "Get panean detail related to owner(petani)",
@@ -580,6 +620,14 @@
         }
     },
     "components" : {
+        "securitySchemes" : {
+            "bearerAuth" : {
+                "type" : "http",
+                "scheme" : "bearer",
+                "bearerFormat" : "JWT",
+                "description" : "Get JWT token from  saved browser chache!"
+            }
+        },
         "parameters" :  {
             "nama_tanaman" : {
                 "name" : "nama_tanaman",
