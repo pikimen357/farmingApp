@@ -164,6 +164,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "api.authentication.TokenAuthentication"    
     ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     "DEFAULT_PERMISSION_CLASSES" : [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly"
     ], 

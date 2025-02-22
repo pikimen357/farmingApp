@@ -60,10 +60,11 @@ class PanenanList(
     # def perform_create(self, serializer):
     #     serializer.save(owner=self.request.user)
     
-class TanamanList(
+class TanamanList (
                   StaffEditorPermissionMixin, 
                   UserQuerySetMixin, 
-                  generics.ListCreateAPIView):
+                  generics.ListCreateAPIView
+                  ):
     queryset = Tanaman.objects.all()
     serializer_class  = TanamanSerializer
     

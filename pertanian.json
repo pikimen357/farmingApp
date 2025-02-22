@@ -71,6 +71,9 @@
                                 }
                         }
                     }
+                }, 
+                "403" : {
+                    "description" : "Forbidden, authentication required"
                 }
             }
         },
@@ -294,14 +297,6 @@
                                     "description" : "Example success get all hama",
                                     "value" : [
                                         {
-                                            "id": 5,
-                                            "nama_hama": "belalang",
-                                            "rate_bahaya": 3,
-                                            "makhluk": "HEWAN",
-                                            "obat": 2,
-                                            "deskripsi": "Deskripsi Hama"
-                                        },
-                                        {
                                             "id": 11,
                                             "nama_hama": "cendawan",
                                             "rate_bahaya": 3,
@@ -334,7 +329,198 @@
                         }
                     }
                 }
+            },
+            "post" : {
+                "tags" : ["Hama"],
+                "summary" : "create new hama",
+                "description" : "create new hama to database",
+                "requestBody" : {
+                    "required" : true,
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "nama_hama": {
+                                        "type" : "string"
+                                    },
+                                    "rate_bahaya": {
+                                        "type" : "number",
+                                        "maximum" : 5,
+                                        "description" : "to define how dangerous this hama"
+                                    },
+                                    "makhluk": {
+                                        "type" : "string",
+                                        "enum" : ["HEWAN", "TUMBUHAN"]
+                                    },
+                                    "obat": {
+                                        "type" : "number",
+                                        "description" : "get from obat_id!"
+                                    },
+                                    "deskripsi": {
+                                        "type" : "string"
+                                    }
+                                },
+                                "required" : [
+                                    "nama_hama",
+                                    "rate_bahaya",
+                                    "makhluk",
+                                    "obat",
+                                    "deskripsi"
+                                ]
+                            },
+                            "examples" : {
+                                "wereng" : {
+                                    "description" : "Example create hama wereng",
+                                    "value" : {
+                                        "nama_hama": "wereng",
+                                        "rate_bahaya": 3,
+                                        "makhluk": "HEWAN",
+                                        "obat": 2,
+                                        "deskripsi": "wereng membuat tanaman rusak"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses" : {
+                    "200" : {
+                        "description" : "success post hama"
+                    }
+                }
             }
+    },
+    "/hama/{nama_hama}" : {
+        "get" : {
+            "tags" : ["Hama"],
+            "summary" : "get spesific hama name",
+            "description" : "get spesific hama name for other purpose",
+            "parameters" : [
+                {
+                    "name" : "nama_hama",
+                    "in" : "path",
+                    "required" : true,
+                    "description" : "name of spesific hama",
+                    "schema" : {
+                        "type" : "string",
+                        "nullable": false
+                    }
+                }
+            ],
+            "responses" : {
+                "200" : {
+                    "description" : "success get nama hama",
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "id": {
+                                        "type" : "number"
+                                    },
+                                    "nama_hama": {
+                                        "type" : "string"
+                                    },
+                                    "rate_bahaya": {
+                                        "type" : "number"
+                                    },
+                                    "makhluk": {
+                                        "type" : "string"
+                                    },
+                                    "obat": {
+                                        "type" : "number"
+                                    },
+                                    "deskripsi": {
+                                        "type" : "string"
+                                    }
+                                
+                                }
+                            },
+                            "examples": {
+                                "wereng" : {
+                                    "description"  :"Example success get hama wereng",
+                                    "value" : {
+                                        "id": 1,
+                                        "nama_hama": "wereng",
+                                        "rate_bahaya": 2,
+                                        "makhluk": "HEWAN",
+                                        "obat": 1,
+                                        "deskripsi": "Deskripsi Hama"
+                                    
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/pestisida-pupuk" : {
+        "get" : {
+            "tags"  : ["Pestisida-Pupuk"],
+            "summary" :"get all pestisida pupuk",
+            "description" : "get all pestisida pupuk for other purpose ",
+            "responses" : {
+                "200" : {
+                    "description" : "Success get all pestisida-pupuk",
+                    "content" :{
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "array",
+                                "items" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                        "id": {
+                                            "type" : "number"
+                                        },
+                                        "jenis": {
+                                            "type" : "string"
+                                        },
+                                        "nama_obat": {
+                                            "type" : "string"
+                                        },
+                                        "produsen": {
+                                            "type" : "string"
+                                        },
+                                        "warna": {
+                                            "type" : "string"
+                                        },
+                                        "deskripsi": {
+                                            "type" : "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "examples" : {
+                                "success" : {
+                                    "description" : "Success get all pestisida pupuk",
+                                    "value" : [
+                                        {
+                                            "id": 1,
+                                            "jenis": "PESTISIDA",
+                                            "nama_obat": "Hermo",
+                                            "produsen": "Farmafarm",
+                                            "warna": "PUTIH",
+                                            "deskripsi": "Deskripsi Obat"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "jenis": "PUPUK",
+                                            "nama_obat": "Ponska",
+                                            "produsen": "Farmafarm",
+                                            "warna": "MERAH",
+                                            "deskripsi": "Deskripsi Obat"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     },
     "/panenan-create" : {
         "post" : {
@@ -418,18 +604,6 @@
                                         "description" : "Example success get all your panenan",
                                         "value" : [
                                             {
-                                                "edit_url": "http://127.0.0.1:8000/v3/tanaman/pare/",
-                                                "id": 19,
-                                                "nama_tanaman": "pare",
-                                                "jenis": "rumput",
-                                                "waktu_tanam_hari": 123,
-                                                "harga_perTon": 1000000000,
-                                                "peluang_hama": 11,
-                                                "deskripsi": "Pare merupakan tanaman yang pahit namun enak banget ya",
-                                                "link_tanaman": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMJ9uJw0-YhIMPe8YSoEy0TTSw8ZFV1enyFw&s",
-                                                "public": true
-                                            },
-                                            {
                                                 "edit_url": "http://127.0.0.1:8000/v3/tanaman/kangkung/",
                                                 "id": 20,
                                                 "nama_tanaman": "kangkung",
@@ -461,30 +635,6 @@
                                                 "waktu_tanam_hari": 110,
                                                 "harga_perTon": 8000000,
                                                 "peluang_hama": 1,
-                                                "deskripsi": "deskripsi tanaman",
-                                                "link_tanaman": "https://trans89.com/media/upload/2022/10/Tangerang-Dorong-Pasar-Besar-Sektor-Pertanian-Dengan-Budidaya-Tanaman-Pangan-Organik-653x366.jpg",
-                                                "public": true
-                                            },
-                                            {
-                                                "edit_url": "http://127.0.0.1:8000/v3/tanaman/kacang%20hijau/",
-                                                "id": 8,
-                                                "nama_tanaman": "kacang hijau",
-                                                "jenis": "legum",
-                                                "waktu_tanam_hari": 75,
-                                                "harga_perTon": 7000000,
-                                                "peluang_hama": 2,
-                                                "deskripsi": "deskripsi tanaman",
-                                                "link_tanaman": "https://trans89.com/media/upload/2022/10/Tangerang-Dorong-Pasar-Besar-Sektor-Pertanian-Dengan-Budidaya-Tanaman-Pangan-Organik-653x366.jpg",
-                                                "public": true
-                                            },
-                                            {
-                                                "edit_url": "http://127.0.0.1:8000/v3/tanaman/kacang%20tanah/",
-                                                "id": 7,
-                                                "nama_tanaman": "kacang tanah",
-                                                "jenis": "legum",
-                                                "waktu_tanam_hari": 100,
-                                                "harga_perTon": 6000000,
-                                                "peluang_hama": 3,
                                                 "deskripsi": "deskripsi tanaman",
                                                 "link_tanaman": "https://trans89.com/media/upload/2022/10/Tangerang-Dorong-Pasar-Besar-Sektor-Pertanian-Dengan-Budidaya-Tanaman-Pangan-Organik-653x366.jpg",
                                                 "public": true
