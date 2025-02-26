@@ -9,8 +9,12 @@ class PanenanSerializer(serializers.ModelSerializer):
     tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S')
     class Meta:
         model = Panenan
-        owner = UserPublicSerializer(source='user', read_only=True)
+        # owner = UserPublicSerializer(source='user', read_only=True)
         fields = ['id', 'hasil_panen', 'berat_ton', 'tanggal_panen', 'deskripsi']
+    
+    def create(self, validated_data):
+        validated_data['owner'] = self.context['request'].user
+        return super().create(validated_data)
 
 class TanamanSerializer(serializers.ModelSerializer):
     
@@ -79,10 +83,13 @@ class HamaSerializer(serializers.ModelSerializer):
 class PanenanDetailSerializer(serializers.ModelSerializer):
     tanaman_nama = serializers.CharField(source='hasil_panen.nama_tanaman', read_only=True)
     waktu_tanam = serializers.IntegerField(source='hasil_panen.waktu_tanam_hari', read_only=True)
+    
+    # if the column name diffrent ro serializer name, use source
     tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S', read_only=True)
     harga = serializers.IntegerField(source='hasil_panen.harga_perTon', read_only=True)
     total_harga = serializers.SerializerMethodField(read_only=True)
     petani = serializers.ReadOnlyField(source='owner.username', read_only=True)
+    deskripsi = serializers.CharField(read_only=True)
     
     # edit_url = serializers.SerializerMethodField(read_only=True)
     

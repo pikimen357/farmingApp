@@ -1,11 +1,10 @@
-django
-# djangorestfrework
-# ipyhton
+django==5.0.2
+djangorestframework==3.15.2
+ipython==8.32.0
 environs
 httpie
 djangorestframework-simplejwt
 django-cors-headers
-# postgre db
 psycopg2-binary
 django-crispy-forms
 crispy-bootstrap5

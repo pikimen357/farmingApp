@@ -12,6 +12,7 @@ function isTokenNotValid(jsonData) {
     return true;
 }
 
+
  // get access token from local(chaching)
  const authToken = localStorage.getItem('access');
 
@@ -65,6 +66,7 @@ const options = {
     let panenanFormData = new FormData(panenanForm);
     let panenanObjectData = Object.fromEntries(panenanFormData);
     let bodyStr = JSON.stringify(panenanObjectData);
+    
     console.log("bodystr : ",bodyStr);
     
     fetch('http://127.0.0.1:8000/v3/panenan-create/', {
@@ -76,7 +78,10 @@ const options = {
         },
         body: bodyStr
     })
-    .then(response => response.json())
+    .then(response => {
+        response.json();
+        alert('Data berhasil dikirim!');
+    })
     .then(data => {
         const isValid = isTokenNotValid(data);
         if (isValid && data.results) {
@@ -91,6 +96,6 @@ const options = {
         // }
     })
     .catch(error => {
-        alert('Terjadi kesalahan: ' + error)
+        console.log('Terjadi kesalahan: ' + error)
     });
 });

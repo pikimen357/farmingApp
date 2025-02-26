@@ -33,14 +33,14 @@ const options = {
         }
 };
 
-for (let index = 0; index < 1000; index++) {
+// for (let index = 0; index < 1000; index++) {
     
     
 
 
 fetch(endpoint, options)
     .then((response) => {
-        console.log("respon e: ",response)
+        console.log("respon sebagai berikut: ",response)
         return response.json()
     })
     .then(data => {
@@ -51,21 +51,21 @@ fetch(endpoint, options)
             let htmlStr = "";
             for (let result of data.results){   
                 
-            //     htmlStr +=  `
-            //     <div class="card mb-3 shadow-sm" id="card">
-            //         <div class="card-body">
-            //             <h5 class="card-title">${result.tanaman_nama}</h5>
-            //             <p class="card-text"><strong>Tanggal:</strong> ${formatTanggal(result.tanggal_panen)}</p>
-            //             <p class="card-text"><strong>Berat:</strong> ${result.berat_ton} ton</p>
-            //             <p class="card-text"><strong>Total Pendapatan:</strong> Rp${result.total_harga.toLocaleString("id-ID")}</p>
-            //             <p class="card-text"><strong>Waktu Tanam:</strong> ${result.waktu_tanam} hari</p>
-            //             <p class="card-text"><strong>Pemanen:</strong> ${result.petani}</p>
-            //             <br>
-            //         </div>
+                htmlStr +=  `
+                <div class="card mb-3 shadow-sm" id="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${result.tanaman_nama}</h5>
+                        <p class="card-text"><strong>Tanggal:</strong> ${formatTanggal(result.tanggal_panen)}</p>
+                        <p class="card-text"><strong>Berat:</strong> ${result.berat_ton} ton</p>
+                        <p class="card-text"><strong>Total Pendapatan:</strong> Rp${result.total_harga.toLocaleString("id-ID")}</p>
+                        <p class="card-text"><strong>Waktu Tanam:</strong> ${result.waktu_tanam} hari</p>
+                        <p class="card-text"><strong>Pemanen:</strong> ${result.petani}</p>
+                        <br>
+                    </div>
                     
                     
-            //     </div>
-            // `;
+                </div>
+            `;
 
             }
             contentContainer.innerHTML = htmlStr
@@ -80,7 +80,7 @@ fetch(endpoint, options)
         console.log(error);
 });
 
-}
+// }
 
 // for (let index = 0; index < 1000000; index++) {
 //     fetch(endpoint, options)

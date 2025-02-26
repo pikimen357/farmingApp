@@ -32,11 +32,11 @@ class PanenanList(
                 ):
     queryset = Panenan.objects.all()
     serializer_class = PanenanSerializer
-    permission_classes = [permissions.DjangoModelPermissions]
+    # permission_classes = [permissions.DjangoModelPermissions]
     
     def perform_create(self, serializer):
         hasil_panen = serializer.validated_data.get('hasil_panen')
-        owner = serializer.validated_data.get('owner')
+        owner = self.request.user
         berat_ton = serializer.validated_data.get('berat_ton', 0)
         created = serializer.validated_data.get('created')
         
@@ -54,8 +54,11 @@ class PanenanList(
         if not createdd:
             # Jika data sudah ada, tambahkan jumlah ton dan perbarui tanggal panen
             panen_obj.berat_ton += berat_ton
-            panen_obj.created
-            panen_obj.save()
+            panen_obj.created = created
+            panen_obj.save(update_fields=['berat_ton', 'created'])
+        
+        # else:
+        #     serializer.save(owner=self.request.user)
     
     # def perform_create(self, serializer):
     #     serializer.save(owner=self.request.user)
