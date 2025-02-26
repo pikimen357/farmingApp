@@ -36,7 +36,7 @@ class PanenanList(
     
     def perform_create(self, serializer):
         hasil_panen = serializer.validated_data.get('hasil_panen')
-        owner = self.request.user
+        owner = serializer.validated_data.get('owner')
         berat_ton = serializer.validated_data.get('berat_ton', 0)
         created = serializer.validated_data.get('created')
         

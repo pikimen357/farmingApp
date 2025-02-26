@@ -50,8 +50,6 @@ class Hama(models.Model):
     def __str__(self):
         return self.nama_hama
     
-    
-    
 # for searching Tanaman
 
 class TanamanQuerySet(models.QuerySet):
@@ -89,7 +87,7 @@ class Tanaman(models.Model):
     link_tanaman = models.URLField(max_length=200, blank=True, null=True, default="https://trans89.com/media/upload/2022/10/Tangerang-Dorong-Pasar-Besar-Sektor-Pertanian-Dengan-Budidaya-Tanaman-Pangan-Organik-653x366.jpg")
     public = models.BooleanField(default=True)
     
-    objects = TanamanManager() # can't migerate
+    objects = TanamanManager() 
     
     class Meta:
         ordering = ['-harga_perTon']
