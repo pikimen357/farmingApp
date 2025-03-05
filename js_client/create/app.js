@@ -73,8 +73,13 @@ document.getElementById('tanamanForm').addEventListener('submit', function(event
                 
                 console.log('Response:', data);
                 // Redirect ke halaman sukses atau reset form
-                warningHarga.innerHTML = `<p>${data.harga_perTon[0]}</p>`
-                warningWaktu.innerHTML = `<p>${data.waktu_tanam_hari[0]}</p>`
+                if (data.harga_perTon[0]) {
+                    warningHarga.innerHTML = `<p>${data.harga_perTon[0]}</p>`;
+                }
+
+                if (data.waktu_tanam_hari[0]) {
+                    warningWaktu.innerHTML = `<p>${data.waktu_tanam_hari[0]}</p>`;
+                }
                 document.getElementById('tanamanForm').reset();
         } 
         else {
@@ -83,5 +88,8 @@ document.getElementById('tanamanForm').addEventListener('submit', function(event
             // console.error('Error response:', data);
         }
     })
-    .catch(error => alert('Terjadi kesalahan: ' + error));
+    .catch(error => {
+        console.log('Terjadi kesalahan: ' + error);
+        alert("Data gagal terkirim");
+    });
 });

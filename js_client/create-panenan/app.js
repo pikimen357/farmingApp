@@ -1,6 +1,7 @@
 const panenanForm = document.getElementById('panenanForm');
 const dataTanaman = document.getElementById('tanaman-list');
 const warningBerat = document.getElementById('warning-berat-ton');
+const warningTanggal = document.getElementById('warning-tanggal')
 
 function isTokenNotValid(jsonData) {
     if(jsonData.code && jsonData.code === 'token_not_valid'){
@@ -79,18 +80,28 @@ const options = {
         },
         body: bodyStr
     })
-    .then(response => {
-        response.json();
-        alert('Data berhasil dikirim!');
+    .then((response) => {
+        
+        console.log("Responsss -->> ", response);
+        return response.json();
+        // alert('Data berhasil dikirim!');
     })
     .then(data => {
         console.log(data);
         const isValid = isTokenNotValid(data);
-        if (isValid && data.results) {
-            alert("data berhasil dikirim");
+        if (isValid) {
+            console.log("Responnya ->> ");
+            if (data.berat_ton[0]){
+                warningBerat.innerHTML = `<p>${data.berat_ton[0]}</p>`;
+            }
+
+            if (data.tanggal_panen[0]){
+                warningTanggal.innerHTML = `<p>${data.tanggal_panen[0]}</p>`;
+            }
+            panenanForm.reset();
         } 
-        else if (data){
-            alert(data.error)
+        else {
+            alert("Data  berhasil dikirim")
         }
     })
     .catch(error => {

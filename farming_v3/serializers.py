@@ -3,16 +3,21 @@ from farming_v3.models import  PestisidaPupuk, Tanaman, Hama, Panenan
 from django.contrib.auth.models import User
 from api.serializers import UserPublicSerializer
 from rest_framework.reverse import reverse
+from django.utils.timezone import now
 
         
 class PanenanSerializer(serializers.ModelSerializer):
     tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S')
     owner = serializers.ReadOnlyField(source='user', read_only=True)
+    deskripsi = serializers.SerializerMethodField()
     class Meta:
         model = Panenan
         
         fields = ['id', 'hasil_panen', 'berat_ton', 'tanggal_panen', 'deskripsi', 'owner']
     
+    def get_deskripsi(self, obj):
+        return f"Panenan {obj.hasil_panen.nama_tanaman} dengan berat {obj.berat_ton}"
+        
     def create(self, validated_data):
         validated_data['owner'] = self.context['request'].user
         return super().create(validated_data)
@@ -21,7 +26,12 @@ class PanenanSerializer(serializers.ModelSerializer):
         if value <= 0:
             raise serializers.ValidationError("berat harus lebih dari 0")
         return value
-
+    
+    def validate_tanggal_panen(self, value):
+        if value > now():
+            raise serializers.ValidationError("Tidak boleh melebihi tanggal hari ini")
+        return value
+        
 class TanamanSerializer(serializers.ModelSerializer):
     
     class TanamanInlineSerializer(serializers.Serializer):
@@ -48,9 +58,9 @@ class TanamanSerializer(serializers.ModelSerializer):
                     'waktu_tanam_hari', 
                     'harga_perTon', 
                     'peluang_hama', 
-                    'deskripsi',
                     'link_tanaman',
                     'public',
+                    'deskripsi',
                     # 'related_tanaman'
                 ]
 
@@ -104,7 +114,7 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
     harga = serializers.IntegerField(source='hasil_panen.harga_perTon', read_only=True)
     total_harga = serializers.SerializerMethodField(read_only=True)
     petani = serializers.ReadOnlyField(source='owner.username', read_only=True)
-    deskripsi = serializers.CharField(read_only=True)
+    deskripsi = serializers.SerializerMethodField(read_only=True)
     
     # edit_url = serializers.SerializerMethodField(read_only=True)
     
@@ -129,9 +139,12 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
     def get_total_harga(self, obj):
         # Menghitung total pendapatan
         return obj.berat_ton * obj.hasil_panen.harga_perTon
+
+    def get_deskripsi(self,obj):
+        if obj.berat_ton > 100:
+            return f"Panenan {obj.hasil_panen.nama_tanaman} dengan hasil yang melimpah"
+        return f"Panenan {obj.hasil_panen.nama_tanaman} dengan berat {obj.berat_ton}"
     
-
-
 # Serializer for table relation panenan -->- tanaman
 class HamaDetailSerializer(serializers.ModelSerializer):
     nama_hama = serializers.CharField( read_only=True)

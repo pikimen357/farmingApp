@@ -115,11 +115,6 @@ class Panenan(models.Model):
 
     def __str__(self):
         return f"{self.hasil_panen.nama_tanaman} - {self.owner.username} - {self.berat_ton} ton"
-   
-    # def save(self, *args, **kwargs):
-    #     if not self.owner:  # Jika owner belum diisi, ambil dari hasil_panen
-    #         self.owner = self.hasil_panen.owner
-    #     super().save(*args, **kwargs)
     
     class Meta:
         ordering = ['created']

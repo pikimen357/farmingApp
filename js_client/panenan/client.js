@@ -60,6 +60,7 @@ fetch(endpoint, options)
                         <p class="card-text"><strong>Total Pendapatan:</strong> Rp${result.total_harga.toLocaleString("id-ID")}</p>
                         <p class="card-text"><strong>Waktu Tanam:</strong> ${result.waktu_tanam} hari</p>
                         <p class="card-text"><strong>Pemanen:</strong> ${result.petani}</p>
+                        <p class="card-text"><strong>Deskripsi:</strong> ${result.deskripsi}</p>
                         <br>
                     </div>
                     
