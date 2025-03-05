@@ -1,5 +1,6 @@
 const panenanForm = document.getElementById('panenanForm');
 const dataTanaman = document.getElementById('tanaman-list');
+const warningBerat = document.getElementById('warning-berat-ton');
 
 function isTokenNotValid(jsonData) {
     if(jsonData.code && jsonData.code === 'token_not_valid'){
@@ -83,19 +84,17 @@ const options = {
         alert('Data berhasil dikirim!');
     })
     .then(data => {
+        console.log(data);
         const isValid = isTokenNotValid(data);
         if (isValid && data.results) {
-                alert('Data berhasil dikirim!');
-                console.log('Response:', data);
-                // Redirect ke halaman sukses atau reset form
-                document.getElementById('tanamanForm').reset();
+            alert("data berhasil dikirim");
         } 
-        // else {
-        //     alert('Gagal mengirim data: ' + (data.message || 'Unknown error'));
-        //     console.error('Error response:', data);
-        // }
+        else if (data){
+            alert(data.error)
+        }
     })
     .catch(error => {
         console.log('Terjadi kesalahan: ' + error)
+
     });
 });

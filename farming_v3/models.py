@@ -36,9 +36,16 @@ class Hama(models.Model):
         TUMBUHAN = "TUMBUHAN"
         HEWAN = "HEWAN"
     
+    class Bahaya(models.IntegerChoices):
+        LOW = 1
+        MODERATE = 2
+        CONSIDERABLE = 3
+        DANGEROUS = 4
+        EXTREME =5
+    
     created = models.DateTimeField(auto_now_add=True)
     nama_hama = models.CharField(max_length=100, unique=True, db_index=True)
-    rate_bahaya = models.IntegerField(default=0)
+    rate_bahaya = models.IntegerField(default=1, choices=Bahaya.choices)
     obat = models.ForeignKey(PestisidaPupuk, on_delete=models.RESTRICT)
     makhluk =models.CharField(max_length=20, choices=Makhluk.choices)
     deskripsi = models.TextField(default="Deskripsi Hama")
@@ -109,7 +116,6 @@ class Panenan(models.Model):
     def __str__(self):
         return f"{self.hasil_panen.nama_tanaman} - {self.owner.username} - {self.berat_ton} ton"
    
-
     # def save(self, *args, **kwargs):
     #     if not self.owner:  # Jika owner belum diisi, ambil dari hasil_panen
     #         self.owner = self.hasil_panen.owner

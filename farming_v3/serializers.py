@@ -7,14 +7,20 @@ from rest_framework.reverse import reverse
         
 class PanenanSerializer(serializers.ModelSerializer):
     tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S')
+    owner = serializers.ReadOnlyField(source='user', read_only=True)
     class Meta:
         model = Panenan
-        # owner = UserPublicSerializer(source='user', read_only=True)
-        fields = ['id', 'hasil_panen', 'berat_ton', 'tanggal_panen', 'deskripsi']
+        
+        fields = ['id', 'hasil_panen', 'berat_ton', 'tanggal_panen', 'deskripsi', 'owner']
     
     def create(self, validated_data):
         validated_data['owner'] = self.context['request'].user
         return super().create(validated_data)
+    
+    def validate_berat_ton(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("berat harus lebih dari 0")
+        return value
 
 class TanamanSerializer(serializers.ModelSerializer):
     
@@ -30,13 +36,12 @@ class TanamanSerializer(serializers.ModelSerializer):
 
     edit_url = serializers.SerializerMethodField(read_only=True)
     # related_tanaman = TanamanInlineSerializer(source='owner.tanaman.all', read_only=True, many=True) 
+    owner = UserPublicSerializer(source='user', read_only=True)
     class Meta:
         model = Tanaman
-        owner = UserPublicSerializer(source='user', read_only=True)
-        
         fields = [
                     'edit_url', 
-                    # 'owner',
+                    'owner',
                     'id', 
                     'nama_tanaman', 
                     'jenis', 
@@ -67,6 +72,16 @@ class TanamanSerializer(serializers.ModelSerializer):
         data["peluang_hama"] = int(data["peluang_hama"]) if "peluang_hama" in data else None
         
         return super().to_internal_value(data)
+    
+    def validate_waktu_tanam_hari(self, value): 
+        if value <= 0:
+            raise serializers.ValidationError("waktu tanam harus lebih dari 0")
+        return value
+    
+    def validate_harga_perTon(self, value): 
+        if value <= 0:
+            raise serializers.ValidationError("harga harus lebih dari 0")
+        return value
     
 class PestisidaPupukSerializer(serializers.ModelSerializer):
     class Meta:

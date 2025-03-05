@@ -38,15 +38,26 @@
             <div class="mb-3">
                 <label for="waktu_tanam_hari" class="form-label">Waktu Tanam (Hari)</label>
                 <input type="number" class="form-control" id="waktu_tanam_hari" name="waktu_tanam_hari" required>
+                <span id="warning-waktu" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="harga_perTon" class="form-label">Harga per Ton (Rp)</label>
                 <input type="number" class="form-control" id="harga_perTon" name="harga_perTon" required>
+                <span id="warning-harga" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label for="peluang_hama" class="form-label">Peluang Hama</label>
-                <input type="number" class="form-control" id="peluang_hama" name="peluang_hama" required>
+                <select type="number" class="form-select" aria-label="Default select example" id="peluang_hama" name="peluang_hama">
+                    <!-- <option selected>Open this select menu</option> -->
+                </select>
             </div>
+
+            <!-- <div class="mb-3">
+                <label for="peluang_hama" class="form-label">Peluang Hama</label>
+                <input type="number" class="form-control" id="peluang_hama" name="peluang_hama" required>
+            </div> -->
+
             <div class="mb-3">
                 <label for="deskripsi" class="form-label">Deskripsi</label>
                 <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" required></textarea>
