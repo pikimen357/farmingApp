@@ -66,13 +66,20 @@ document.getElementById('tanamanForm').addEventListener('submit', function(event
         },
         body: bodyStr
     })
-    .then(response => response.json())
+    .then(response => {
+
+        return response.json();
+    })
     .then(data => {
         const isValid = isTokenNotValid(data);
         if (isValid) {
                 
                 console.log('Response:', data);
-                // Redirect ke halaman sukses atau reset form
+
+                if (data.nama_tanaman[0]){
+                    document.getElementById('unique-nama').innerHTML = `<p>${data.nama_tanaman[0]}</p>`;
+                }
+
                 if (data.harga_perTon[0]) {
                     warningHarga.innerHTML = `<p>${data.harga_perTon[0]}</p>`;
                 }
@@ -80,12 +87,13 @@ document.getElementById('tanamanForm').addEventListener('submit', function(event
                 if (data.waktu_tanam_hari[0]) {
                     warningWaktu.innerHTML = `<p>${data.waktu_tanam_hari[0]}</p>`;
                 }
+                // Redirect ke halaman sukses atau reset form
                 document.getElementById('tanamanForm').reset();
         } 
         else {
-            alert('Data berhasil dikirim!');
-            // alert('Gagal mengirim data: ' + (data.message || 'Unknown error'));
-            // console.error('Error response:', data);
+            
+            alert('Gagal mengirim data: ' + (data.message || 'Unknown error'));
+            console.error('Error response:', data);
         }
     })
     .catch(error => {

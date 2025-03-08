@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'api',
     'search',
+    # 'provider',
+    # 'provider.oauth2',
 ]
 
 
@@ -161,6 +163,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES" : [
         "rest_framework.authentication.SessionAuthentication",
+        # 'rest_framework.authentication.OAuth2Authentication',
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "api.authentication.TokenAuthentication"    
     ],

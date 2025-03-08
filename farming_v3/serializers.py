@@ -102,7 +102,11 @@ class HamaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hama
         fields = ['id', 'nama_hama', 'rate_bahaya', 'makhluk', 'obat', 'deskripsi']
-
+        
+    def validate_rate_bahaya(self, value):
+        if not (1 <= value <= 5):
+            raise serializers.ValidationError("rate harus 1 - 5")
+        return value
 
 # Serializer for table relation panenan --> tanaman, panenan --> petani 
 class PanenanDetailSerializer(serializers.ModelSerializer):
@@ -153,10 +157,16 @@ class HamaDetailSerializer(serializers.ModelSerializer):
     # bukan tabel nys sendiri (hama)
     nama_obat = serializers.CharField(source='obat.nama_obat', read_only=True)
     makhluk = serializers.CharField(read_only=True)
+    rate_bahaya = serializers.CharField(read_only=True)
     
     class Meta:
         model = Hama
-        fields = ['id', 'nama_hama', 'nama_obat', 'makhluk']
+        fields = ['id', 'nama_hama', 'nama_obat', 'makhluk', 'rate_bahaya']
+    
+    def validate_rate_bahaya(self, value):
+        if not (1 <= value <= 5):
+            raise serializers.ValidationError("rate harus 1 - 5")
+        return value
         
         
 class UserSerializer(serializers.ModelSerializer):

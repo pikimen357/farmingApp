@@ -60,9 +60,6 @@ class PanenanList(
         # else:
         #     serializer.save(owner=self.request.user)
     
-    # def perform_create(self, serializer):
-    #     serializer.save(owner=self.request.user)
-    
 class TanamanList (
                   StaffEditorPermissionMixin, 
                   UserQuerySetMixin, 

@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    # url(r'^oauth2/', include('provider.oauth2.urls', namespace='oauth2')),
     path('admin/', admin.site.urls),
     path('v3/', include('farming_v3.urls')),
     path('api/', include('api.urls')),

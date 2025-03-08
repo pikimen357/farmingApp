@@ -20,23 +20,23 @@ if auth_response.status_code == 200:
     #     {"owner": 1, "nama_tanaman": "padi", "jenis": "serelia", "waktu_tanam_hari": 120, "harga_perTon": 5000000, "peluang_hama": 3, "public": False}
     # ]
 
-    # hama_list = [
-    #     # {"nama_hama": "ulat", "rate_bahaya": 4, "makhluk": "HEWAN", "obat": 1}
-    # ]
+    hama_list = [
+        {"nama_hama": "pung", "rate_bahaya": 6, "makhluk": "HEWAN", "obat": 1}
+    ]
     
-    pupes_list = [
-    {
-        "jenis": "PESTISIDA",
-        "nama_obat": "AgroShield",
-        "produsen": "AgriCo",
-        "warna": "PUTIH"
-    }]
+    # pupes_list = [
+    # {
+    #     "jenis": "PESTISIDA",
+    #     "nama_obat": "AgroShield",
+    #     "produsen": "AgriCo",
+    #     "warna": "PUTIH"
+    # }]
 
 
     # endpoint_tanaman = "http://localhost:8000/v3/tanaman/"
-    # endpoint_hama = "http://localhost:8000/v3/hama/"
-    endpoint_pupes = "http://localhost:8000/v3/pestisida-pupuk/"
+    endpoint_hama = "http://localhost:8000/v3/hama/"
+    # endpoint_pupes = "http://localhost:8000/v3/pestisida-pupuk/"
 
-    for pupes in pupes_list:
-        response_pupes = requests.post(endpoint_pupes, headers=headers, json=pupes)
-        print("Hama Response:", response_pupes.status_code, response_pupes.json())
+    for hama in hama_list:
+        response_hama = requests.post(endpoint_hama, headers=headers, json=hama)
+        print("Hama Response:", response_hama.status_code, response_hama.json())
