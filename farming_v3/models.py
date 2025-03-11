@@ -87,7 +87,7 @@ class Tanaman(models.Model):
     nama_tanaman = models.CharField(max_length=100, unique=True, db_index=True)
     jenis = models.CharField(max_length=100)
     waktu_tanam_hari = models.IntegerField(default=0)
-    harga_perTon = models.BigIntegerField(default=0)
+    harga_per_ton = models.BigIntegerField(default=0)
     peluang_hama = models.ForeignKey(Hama, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, related_name='tanaman', on_delete=models.CASCADE)
     deskripsi = models.TextField(default="deskripsi tanaman")
@@ -97,7 +97,7 @@ class Tanaman(models.Model):
     objects = TanamanManager() 
     
     class Meta:
-        ordering = ['-harga_perTon']
+        ordering = ['-harga_per_ton']
         db_table = 'tanaman'
     
     def __str__(self):

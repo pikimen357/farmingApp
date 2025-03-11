@@ -56,7 +56,7 @@ class TanamanSerializer(serializers.ModelSerializer):
                     'nama_tanaman', 
                     'jenis', 
                     'waktu_tanam_hari', 
-                    'harga_perTon', 
+                    'harga_per_ton', 
                     'peluang_hama', 
                     'link_tanaman',
                     'public',
@@ -78,7 +78,7 @@ class TanamanSerializer(serializers.ModelSerializer):
         # ensure certain fields are converted to integer
         data["owner"] = int(data["owner"]) if "owner" in data else None
         data["waktu_tanam_hari"] = int(data["waktu_tanam_hari"]) if "waktu_tanam_hari" in data else None
-        data["harga_perTon"] = int(data["harga_perTon"]) if "harga_perTon" in data else None
+        data["harga_per_ton"] = int(data["harga_per_ton"]) if "harga_per_ton" in data else None
         data["peluang_hama"] = int(data["peluang_hama"]) if "peluang_hama" in data else None
         
         return super().to_internal_value(data)
@@ -115,7 +115,7 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
     
     # if the column name diffrent ro serializer name, use source
     tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S', read_only=True)
-    harga = serializers.IntegerField(source='hasil_panen.harga_perTon', read_only=True)
+    harga = serializers.IntegerField(source='hasil_panen.harga_per_ton', read_only=True)
     total_harga = serializers.SerializerMethodField(read_only=True)
     petani = serializers.ReadOnlyField(source='owner.username', read_only=True)
     deskripsi = serializers.SerializerMethodField(read_only=True)
@@ -142,7 +142,7 @@ class PanenanDetailSerializer(serializers.ModelSerializer):
         
     def get_total_harga(self, obj):
         # Menghitung total pendapatan
-        return obj.berat_ton * obj.hasil_panen.harga_perTon
+        return obj.berat_ton * obj.hasil_panen.harga_per_ton
 
     def get_deskripsi(self,obj):
         if obj.berat_ton > 100:
