@@ -9,14 +9,14 @@ from django.utils.timezone import now
 class PanenanSerializer(serializers.ModelSerializer):
     tanggal_panen = serializers.DateTimeField(source='created',  format='%Y-%m-%d %H:%M:%S')
     owner = serializers.ReadOnlyField(source='user', read_only=True)
-    deskripsi = serializers.SerializerMethodField()
+    # deskripsi = serializers.SerializerMethodField()
     class Meta:
         model = Panenan
         
         fields = ['id', 'hasil_panen', 'berat_ton', 'tanggal_panen', 'deskripsi', 'owner']
     
-    def get_deskripsi(self, obj):
-        return f"Panenan {obj.hasil_panen.nama_tanaman} dengan berat {obj.berat_ton}"
+    # def get_deskripsi(self, obj):
+    #     return f"Panenan {obj.hasil_panen} dengan berat {obj.berat_ton}"
         
     def create(self, validated_data):
         validated_data['owner'] = self.context['request'].user
