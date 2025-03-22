@@ -15,8 +15,6 @@ class PanenanSerializer(serializers.ModelSerializer):
         
         fields = ['id', 'hasil_panen', 'berat_ton', 'tanggal_panen', 'deskripsi', 'owner']
     
-    # def get_deskripsi(self, obj):
-    #     return f"Panenan {obj.hasil_panen} dengan berat {obj.berat_ton}"
         
     def create(self, validated_data):
         validated_data['owner'] = self.context['request'].user
