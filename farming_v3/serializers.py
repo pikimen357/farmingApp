@@ -86,7 +86,7 @@ class TanamanSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("waktu tanam harus lebih dari 0")
         return value
     
-    def validate_harga_perTon(self, value): 
+    def validate_harga_per_ton(self, value): 
         if value <= 0:
             raise serializers.ValidationError("harga harus lebih dari 0")
         return value
