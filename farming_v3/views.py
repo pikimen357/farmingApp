@@ -111,7 +111,7 @@ class PanenanDetailView(StaffEditorPermissionMixin,
     def get_object(self):
         # Override untuk mendukung lookup melalui relasi
         hasil_panen = self.kwargs.get(self.lookup_field)  # Ambil tanaman_nama dari URL
-        return self.get_queryset().filter(hasil_panen__nama_tanaman__icontains=hasil_panen)
+        return self.get_queryset().get(hasil_panen__nama_tanaman__icontains=hasil_panen)
 
 class PupukPestisidaDetail(StaffEditorPermissionMixin, 
                             # UserQuerySetMixin, 
