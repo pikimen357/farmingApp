@@ -15,10 +15,10 @@ django-cors-headers==4.7.0
 django-crispy-forms==2.3
 django-oauth-plus==2.2.9
 django-oauth2-provider==0.2.6.1
+django-redis==5.4.0
 djangorestframework==3.15.2
 djangorestframework-oauth==1.1.0
 djangorestframework_simplejwt==5.4.0
-python-dotenv==1.0.1
 environs==14.1.1
 executing==2.2.0
 Flask==3.1.0
@@ -29,6 +29,7 @@ geventhttpclient==2.3.3
 greenlet==3.1.1
 ground==9.0.0
 gunicorn==23.0.0
+hiredis==3.1.0
 httpie==3.2.4
 httplib2==0.22.0
 idna==3.10
@@ -60,6 +61,7 @@ pyparsing==3.2.1
 PySocks==1.7.1
 python-dotenv==1.0.1
 pyzmq==26.2.1
+redis==5.2.1
 reprit==0.9.0
 requests==2.32.3
 requests-toolbelt==1.0.0
