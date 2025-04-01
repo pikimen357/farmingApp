@@ -9,6 +9,11 @@ from api.mixins import StaffEditorPermissionMixin, UserQuerySetMixin
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 
+# Cache
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie, vary_on_headers
+
 # GENERAL OBJECTS
     
 class UserList(StaffEditorPermissionMixin, 
@@ -60,6 +65,7 @@ class PanenanList(
         # else:
         #     serializer.save(owner=self.request.user)
     
+@method_decorator(cache_page(60 * 15), name="dispatch")
 class TanamanList (
                   StaffEditorPermissionMixin, 
                   UserQuerySetMixin, 
@@ -68,6 +74,16 @@ class TanamanList (
     queryset = Tanaman.objects.all()
     serializer_class  = TanamanSerializer
     
+    # caching
+    # @method_decorator(cache_page(60*15, key_prefix="tanaman_list")) 
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+    
+    # caching
+    def get_queryset(self):
+        import time
+        time.sleep(3)
+        return super().get_queryset()
     
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

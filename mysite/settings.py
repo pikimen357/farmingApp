@@ -192,3 +192,13 @@ SIMPLE_JWT = {
 
 # LOGIN_REDIRECT_URL = "farming_v3:home"
 LOGOUT_REDIRECT_URL = "farming:login"
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
