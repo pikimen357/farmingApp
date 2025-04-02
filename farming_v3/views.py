@@ -37,7 +37,7 @@ class UserList(StaffEditorPermissionMixin,
 class PanenanDetailList(StaffEditorPermissionMixin, 
                         UserQuerySetMixin, 
                         generics.ListAPIView):
-    queryset = Panenan.objects.all()
+    queryset = Panenan.objects.all().select_related('owner', 'hasil_panen')
     serializer_class = PanenanDetailSerializer
    
 
@@ -47,7 +47,7 @@ class PanenanList(
                     UserQuerySetMixin,
                     generics.ListCreateAPIView
                 ):
-    queryset = Panenan.objects.all()
+    queryset = Panenan.objects.all().select_related('owner', 'hasil_panen')
     serializer_class = PanenanSerializer
     # permission_classes = [permissions.DjangoModelPermissions]
     
@@ -82,7 +82,7 @@ class TanamanList (
                   UserQuerySetMixin, 
                   generics.ListCreateAPIView
                   ):
-    queryset = Tanaman.objects.all()
+    queryset = Tanaman.objects.select_related('peluang_hama').all()
     serializer_class  = TanamanSerializer
     
     
@@ -92,7 +92,7 @@ class TanamanList (
 class HamaList(StaffEditorPermissionMixin,
             #    UserQuerySetMixin,
                generics.ListCreateAPIView):
-    queryset = Hama.objects.all()
+    queryset = Hama.objects.select_related('obat').all()
     serializer_class = HamaSerializer
     
 class PupukPestisidaList(StaffEditorPermissionMixin, 
@@ -115,15 +115,16 @@ class PanenanDetailView(StaffEditorPermissionMixin,
     
     
     def get_queryset(self):
-        queryset = Panenan.objects.all()
+                    
+        # Select related menghindari N+1 problem
+        queryset = Panenan.objects.all().select_related('owner', 'hasil_panen')
         #mengambil nama petani dari parameter url 
         petani_nama = self.request.query_params.get('petani_nama') 
         
         if petani_nama:
             # icontains untuk mengambil sebagian petani_nama Vidky -> dky, idk, Vid, dan lain-lain
-            
-            # Select related menghindari N+1 problem
-            queryset = queryset.filter(owner__username__icontains=petani_nama).select_related('owner')
+
+            queryset = queryset.filter(owner__username__icontains=petani_nama)
             
         return queryset
     
