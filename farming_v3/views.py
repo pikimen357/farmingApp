@@ -145,9 +145,14 @@ class PupukPestisidaDetail(StaffEditorPermissionMixin,
 class HamaDetailView( StaffEditorPermissionMixin, 
                         # UserQuerySetMixin, 
                         generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = HamaSerializer
+    # serializer_class = HamaSerializer
     
-    # mengambil data hama berdasarkan namanya
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return HamaDetailSerializer  # Serializer specially for  GET
+        return HamaSerializer  #Default  serializer for PUT, PATCH, and DELETE
+    
+    # get hama by its name
     def get_object(self):
         nama_hama = self.kwargs['nama_hama']
         return Hama.objects.get(nama_hama=nama_hama)
