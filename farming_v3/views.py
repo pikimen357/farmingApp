@@ -25,7 +25,7 @@ class UserList(StaffEditorPermissionMixin,
 class PanenanDetailList(StaffEditorPermissionMixin, 
                         UserQuerySetMixin, 
                         generics.ListAPIView):
-    queryset = Panenan.objects.all()
+    queryset = Panenan.objects.all().select_related('owner', 'hasil_panen')
     serializer_class = PanenanDetailSerializer
    
 
@@ -35,7 +35,7 @@ class PanenanList(
                     UserQuerySetMixin,
                     generics.ListCreateAPIView
                 ):
-    queryset = Panenan.objects.all()
+    queryset = Panenan.objects.all().select_related('owner', 'hasil_panen')
     serializer_class = PanenanSerializer
     # permission_classes = [permissions.DjangoModelPermissions]
     
@@ -71,7 +71,7 @@ class TanamanList (
                   UserQuerySetMixin, 
                   generics.ListCreateAPIView
                   ):
-    queryset = Tanaman.objects.all()
+    queryset = Tanaman.objects.all().select_related('owner', 'peluang_hama')
     serializer_class  = TanamanSerializer
     
     # caching
@@ -91,7 +91,7 @@ class TanamanList (
 class HamaList(StaffEditorPermissionMixin,
             #    UserQuerySetMixin,
                generics.ListCreateAPIView):
-    queryset = Hama.objects.all()
+    queryset = Hama.objects.all().select_related('obat')
     serializer_class = HamaSerializer
     
 class PupukPestisidaList(StaffEditorPermissionMixin, 
@@ -114,7 +114,7 @@ class PanenanDetailView(StaffEditorPermissionMixin,
     
     
     def get_queryset(self):
-        queryset = Panenan.objects.all()
+        queryset = Panenan.objects.all().select_related('owner', 'hasil_panen')
         #mengambil nama petani dari parameter url 
         petani_nama = self.request.query_params.get('petani_nama') 
         
