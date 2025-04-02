@@ -121,7 +121,9 @@ class PanenanDetailView(StaffEditorPermissionMixin,
         
         if petani_nama:
             # icontains untuk mengambil sebagian petani_nama Vidky -> dky, idk, Vid, dan lain-lain
-            queryset = queryset.filter(owner__username__icontains=petani_nama)
+            
+            # Select related menghindari N+1 problem
+            queryset = queryset.filter(owner__username__icontains=petani_nama).select_related('owner')
             
         return queryset
     
