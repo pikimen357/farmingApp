@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+set -e
+
+python manage.py makemigrations farming_v3
+
 python manage.py collectstatic --noinput
 python manage.py migrate --noinput
 

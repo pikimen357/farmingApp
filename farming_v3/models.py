@@ -110,8 +110,15 @@ class Panenan(models.Model):
     # foreign key merujuk pada id tabel Tanaman
     hasil_panen = models.ForeignKey(Tanaman, on_delete=models.RESTRICT)
     berat_ton = models.BigIntegerField(default=0)
+    harga_tanaman = models.BigIntegerField(default=0)
+    total_harga = models.BigIntegerField(default=0)
     owner = models.ForeignKey(User, related_name='panenan', on_delete=models.RESTRICT, default=1)
     deskripsi = models.TextField()
+    
+    def save(self, *args, **kwargs):
+        self.harga_tanaman = self.hasil_panen.harga_per_ton
+        self.total_harga = self.harga_tanaman * self.berat_ton
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.hasil_panen.nama_tanaman} - {self.owner.username} - {self.berat_ton} ton"
