@@ -3,6 +3,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from farming_v3 import views
 
 urlpatterns = [
+    
+    # Redis Test
+    path('factorial/<int:n>/', views.factorial_with_cache, name='factorial'),
+    
     path('signup/', views.authView, name="authView"),
     path("accounts/", include("django.contrib.auth.urls")),
 

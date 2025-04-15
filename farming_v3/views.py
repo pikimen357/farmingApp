@@ -8,11 +8,26 @@ from farming_v3.permissions import IsOwnerOrReadOnly
 from api.mixins import StaffEditorPermissionMixin, UserQuerySetMixin
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse
 
 # Cache
+from django.core.cache import cache
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie, vary_on_headers
+
+# Redis Test
+def factorial_with_cache(request, n):
+    n = int(n)
+    result = cache.get(f'factorial_{n}')
+
+    if result is None:
+        result = 1
+        for i in range(1, n + 1):
+            result *= i
+        cache.set(f'factorial_{n}', result, 60)  # Cache for 60 seconds
+
+    return HttpResponse(f'Factorial of {n} is: {result}')
 
 # GENERAL OBJECTS
     
@@ -40,27 +55,30 @@ class PanenanList(
     # permission_classes = [permissions.DjangoModelPermissions]
     
     def perform_create(self, serializer):
-        hasil_panen = serializer.validated_data.get('hasil_panen')
-        owner = self.request.user
-        berat_ton = serializer.validated_data.get('berat_ton', 0)
-        created = serializer.validated_data.get('created')
+        serializer.save(owner=self.request.user)
+    
+    # def perform_create(self, serializer):
+    #     hasil_panen = serializer.validated_data.get('hasil_panen')
+    #     owner = self.request.user
+    #     berat_ton = serializer.validated_data.get('berat_ton', 0)
+    #     created = serializer.validated_data.get('created')
         
-        # jika belum ada panenan dengan nama dan petani sama --> create
-        # jika sudah ada panenan dengan nama dan petani sama --> update
-        panen_obj, createdd = Panenan.objects.get_or_create(
-            hasil_panen=hasil_panen,
-            owner=owner,
-            defaults={
-                'berat_ton' : berat_ton,
-                'created' : created,
-            }
-        )
+    #     # jika belum ada panenan dengan nama dan petani sama --> create
+    #     # jika sudah ada panenan dengan nama dan petani sama --> update
+    #     panen_obj, createdd = Panenan.objects.get_or_create(
+    #         hasil_panen=hasil_panen,
+    #         owner=owner,
+    #         defaults={
+    #             'berat_ton' : berat_ton,
+    #             'created' : created,
+    #         }
+    #     )
         
-        if not createdd:
-            # Jika data sudah ada, tambahkan jumlah ton dan perbarui tanggal panen
-            panen_obj.berat_ton += berat_ton
-            panen_obj.created = created
-            panen_obj.save(update_fields=['berat_ton', 'created'])
+    #     if not createdd:
+    #         # Jika data sudah ada, tambahkan jumlah ton dan perbarui tanggal panen
+    #         panen_obj.berat_ton += berat_ton
+    #         panen_obj.created = created
+    #         panen_obj.save(update_fields=['berat_ton', 'created'])
         
         # else:
         #     serializer.save(owner=self.request.user)
