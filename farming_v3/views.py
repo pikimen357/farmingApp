@@ -83,7 +83,7 @@ class PanenanList(
         # else:
         #     serializer.save(owner=self.request.user)
     
-@method_decorator(cache_page(60 * 15), name="dispatch")
+# @method_decorator(cache_page(60 * 15), name="dispatch")
 class TanamanList (
                   StaffEditorPermissionMixin, 
                   UserQuerySetMixin, 
@@ -93,7 +93,7 @@ class TanamanList (
     serializer_class  = TanamanSerializer
     
     # caching
-    # @method_decorator(cache_page(60*15, key_prefix="tanaman_list")) 
+    @method_decorator(cache_page(60*15, key_prefix="tanaman_list")) 
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
     
@@ -111,6 +111,16 @@ class HamaList(StaffEditorPermissionMixin,
                generics.ListCreateAPIView):
     queryset = Hama.objects.all().select_related('obat')
     serializer_class = HamaSerializer
+    
+    @method_decorator(cache_page(60*15, key_prefix="hama_list")) 
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+    
+    # caching
+    def get_queryset(self):
+        import time
+        time.sleep(3)
+        return super().get_queryset()
     
 class PupukPestisidaList(StaffEditorPermissionMixin, 
                         #  UserQuerySetMixin,

@@ -1,3 +1,4 @@
+version: "3.8"
 services:
   db:
     image: postgres:17
@@ -13,6 +14,17 @@ services:
     container_name: redis_cache
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data_a:/data
+    restart: always
+
+  redis_insight:
+    image: redislabs/redisinsight:1.14.0
+    container_name: redis_insight
+    ports:
+      - "8005:8001"
+    volumes:
+      - redis_insight_volume_data:/db
 
   django-web:
     build: .
@@ -38,3 +50,5 @@ services:
 
 volumes:
   postgres_data:
+  redis_data_a:
+  redis_insight_volume_data:
