@@ -1,10 +1,15 @@
 from django.db import models
 from django.db.models import UniqueConstraint
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.db.models import Q
 
-User = settings.AUTH_USER_MODEL # 'auth.User'
+# User = settings.AUTH_USER_MODEL # 'auth.User'
+
+# additional user attributes
+class User(AbstractUser):
+    telepon = models.CharField(null=True, blank=True,unique=True, max_length=20)
+    luas_tanah_ha = models.BigIntegerField(default=0,  null=False)
 
 class PestisidaPupuk(models.Model):
     class Warna(models.TextChoices):
@@ -91,7 +96,7 @@ class Tanaman(models.Model):
     peluang_hama = models.ForeignKey(Hama, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, related_name='tanaman', on_delete=models.CASCADE)
     deskripsi = models.TextField(default="deskripsi tanaman")
-    link_tanaman = models.URLField(max_length=200, blank=True, null=True, default="https://trans89.com/media/upload/2022/10/Tangerang-Dorong-Pasar-Besar-Sektor-Pertanian-Dengan-Budidaya-Tanaman-Pangan-Organik-653x366.jpg")
+    gambar = models.ImageField(upload_to='tanaman/', null=True, blank=True)
     public = models.BooleanField(default=True)
     
     objects = TanamanManager() 

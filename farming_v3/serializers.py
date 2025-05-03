@@ -58,9 +58,9 @@ class TanamanSerializer(serializers.ModelSerializer):
                     'waktu_tanam_hari', 
                     'harga_per_ton', 
                     'peluang_hama', 
-                    'link_tanaman',
                     'public',
                     'deskripsi',
+                    'gambar'
                     # 'related_tanaman'
                 ]
 
@@ -177,4 +177,4 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['id', 'username', 'panenan', 'tanaman']
+        fields = ['id', 'username', 'panenan', 'tanaman', 'telepon', 'luas_tanah_ha']

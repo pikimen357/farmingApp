@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="shadow-wrap">
-  <div class="form-wrap">
-    <h3>Signup</h3>
+  <div class="form-wrap" style="border-radius: 7.5px; width: 550px; height: 800px; font-size: 10px;"  >
+    <h2><b>Buat Akun</b></h2>
     <form method="POST">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" style="background-color:rgb(184, 109, 17); padding: 15px; border-radius: 5px; color:white;" class="">Submit</button>
     </form>
-    <a class="signup-link" href="{% url 'login' %}">Login</a>
+    <a class="signup-link" style="background-color:rgb(4, 25, 182); padding: 15px; border-radius: 5px; color:white;" href="{% url 'login' %}"><b>Login</b></a>
 
     {% if messages %}
       {% for message in messages %}
@@ -19,5 +18,4 @@
       {% endfor %}
     {% endif %}
   </div>
-</div>
 {% endblock content %}

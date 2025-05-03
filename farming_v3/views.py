@@ -7,10 +7,13 @@ from rest_framework.response  import Response
 from farming_v3.permissions import IsOwnerOrReadOnly
 from api.mixins import StaffEditorPermissionMixin, UserQuerySetMixin
 from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomUserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 def user_login(request):
     if request.method == "POST":
@@ -169,9 +172,9 @@ class TanamanDetail(StaffEditorPermissionMixin,
     
 def authView(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST or None)
+        form = CustomUserCreationForm(request.POST or None)
         if form.is_valid():
             form.save()
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, "registration/signup.html", {"form" : form})
